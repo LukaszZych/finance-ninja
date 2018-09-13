@@ -1,0 +1,1 @@
+export interface UserModel {  name: string;  password: string;  expenses: any[];  incomes: any[];  isAdmin: boolean;}
