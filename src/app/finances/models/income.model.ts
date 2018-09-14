@@ -1,0 +1,1 @@
+export interface Income {  value: number;  description: string;  date: string;}

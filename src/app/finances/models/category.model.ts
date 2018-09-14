@@ -1,0 +1,1 @@
+export type Category = 'food' | 'home' | 'car' | 'entertainment' | 'clothes' | 'firm' | 'education';
