@@ -1,1 +1,0 @@
-import { Expense } from './expense.model';import { Income } from './income.model';export interface User {  email: string;  password: string;  expenses?: Array<Expense>;  incomes?: Array<Income>;  isAdmin?: boolean;}

@@ -5,7 +5,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 
-import { FinancesModule } from './finances/finances.module';
+import { FinancesModule } from '../finances/finances.module';
+import { MatIconModule, MatToolbarModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,8 @@ import { FinancesModule } from './finances/finances.module';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    MatToolbarModule,
+    MatIconModule,
     FinancesModule
   ],
   providers: [],

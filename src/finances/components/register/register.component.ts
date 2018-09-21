@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { User } from '../../models/user.model';
+import { catchError, filter, tap } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +15,8 @@ export class RegisterComponent implements OnInit {
   public registerForm: FormGroup;
 
   constructor(private userService: UserService,
-              private formBuilder: FormBuilder) {}
+              private formBuilder: FormBuilder) {
+  }
 
   ngOnInit() {
     this.registerForm = this.initializeForm();
@@ -30,13 +34,26 @@ export class RegisterComponent implements OnInit {
     const password = this.registerForm.get('password').value;
 
     this.userService.createUser(email, password)
-      .subscribe((value) => {
-        console.log(value);
-      });
+      .pipe(
+        tap((response) => console.log(response)),
+        filter((response) => response.status === 200),
+        tap(() => console.log('filter works')),
+        catchError((error) => {
+          console.log('caught error', error);
+          return throwError(error);
+        })
+      )
+      .subscribe(
+        (response) => {
+          console.log('subscribe: ', response);
+        },
+        (error) => {
+          console.log('error: ', error);
+        }
+      );
   }
 
-  public getErrorMessage() {
-    return this.registerForm.hasError('required') ? 'You must enter a value' :
-      this.registerForm.hasError('email') ? 'Not a valid email' : ':(';
+  public logForm() {
+    console.log(this.registerForm);
   }
 }
