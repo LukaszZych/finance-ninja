@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 
 import { FinancesModule } from '../finances/finances.module';
-import { MatIconModule, MatToolbarModule } from '@angular/material';
+import { MatButtonModule, MatIconModule, MatToolbarModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -18,6 +18,7 @@ import { MatIconModule, MatToolbarModule } from '@angular/material';
     FormsModule,
     MatToolbarModule,
     MatIconModule,
+    MatButtonModule,
     FinancesModule
   ],
   providers: [],

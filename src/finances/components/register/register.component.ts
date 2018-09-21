@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { User } from '../../models/user.model';
 import { catchError, filter, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
@@ -39,7 +38,6 @@ export class RegisterComponent implements OnInit {
         filter((response) => response.status === 200),
         tap(() => console.log('filter works')),
         catchError((error) => {
-          console.log('caught error', error);
           return throwError(error);
         })
       )
@@ -51,9 +49,5 @@ export class RegisterComponent implements OnInit {
           console.log('error: ', error);
         }
       );
-  }
-
-  public logForm() {
-    console.log(this.registerForm);
   }
 }

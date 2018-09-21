@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 
 import { User } from '../models/user.model';
 import { environment } from '../../environments/environment';
@@ -12,13 +12,6 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   createUser(email: string, password: string): Observable<HttpResponse<User>> {
-    // dodanie headerów i podstawowej autoryzacji
-    const httpOptions = {
-      headers: new HttpHeaders({
-        observe: 'response'
-      })
-    };
-
     const user: User = {
       email: email,
       password: password
