@@ -1,0 +1,1 @@
+import { Routes } from '@angular/router';import { InfoComponent } from '../components/info/info.component';export const appRoutes: Routes = [  { path: '', component: InfoComponent },  { path: '**', pathMatch: 'full', redirectTo: '' }];

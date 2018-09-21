@@ -1,34 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 
-import { UserService } from './services/user.service';
-import { RegisterComponent } from './components/register/register.component';
-import { ReactiveFormsModule } from '@angular/forms';
-
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material';
+import { AddExpenseComponent } from './components/add-expense/add-expense.component';
+import { AddIncomeComponent } from './components/add-income/add-income.component';
+import { RouterModule } from '@angular/router';
+import { financeRoutes } from './routes/finance.routes';
+import { StatisticsComponent } from './containers/statistics/statistics.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatInputModule,
-    MatIconModule,
-    MatCardModule
+    RouterModule.forChild(financeRoutes)
   ],
   declarations: [
-    RegisterComponent
-  ],
-  exports: [
-    RegisterComponent
-  ],
-  providers: [
-    UserService
+    AddExpenseComponent,
+    AddIncomeComponent,
+    StatisticsComponent
   ]
 })
 export class FinancesModule { }
