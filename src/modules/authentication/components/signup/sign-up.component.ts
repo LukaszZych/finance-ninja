@@ -41,7 +41,7 @@ export class SignUpComponent implements OnInit {
         })
       )
       .subscribe(
-        (response: User) => {
+        (response: {email: string, token: string, _id: string}) => {
           console.log('subscribe: ', response);
           this.userService.saveToken(response.token);
         },
