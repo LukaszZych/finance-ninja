@@ -1,3 +1,19 @@
-<p>
-  add-income works!
-</p>
+<lz-form-card>
+  <form [formGroup]="incomeForm" #form="ngForm" (ngSubmit)="addIncome()">
+    <mat-form-field class="full-width">
+      <mat-icon matPrefix>monetization_on</mat-icon>
+      <input matInput placeholder="Value" formControlName="value" type="number">
+      <mat-error *ngIf="incomeForm.get('value').invalid">Value is not valid.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width medium-bottom-margin">
+      <mat-icon matPrefix>description</mat-icon>
+      <input matInput placeholder="Description" formControlName="description" type="text">
+      <mat-error *ngIf="incomeForm.get('description').invalid">Description is not valid.</mat-error>
+    </mat-form-field>
+
+    <div class="buttons">
+      <button mat-flat-button [disabled]="!incomeForm.valid" type="submit">Add</button>
+    </div>
+  </form>
+</lz-form-card>

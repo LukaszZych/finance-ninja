@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { UserService } from '../../../authentication/services/user.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Income } from '../../models/income.model';
 
 @Component({
   selector: 'lz-add-income',
@@ -7,9 +10,39 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddIncomeComponent implements OnInit {
 
-  constructor() { }
+  public incomeForm: FormGroup;
+  @ViewChild('form') form;
 
-  ngOnInit() {
+  constructor(private userService: UserService,
+              private formBuilder: FormBuilder) {
   }
 
+  ngOnInit() {
+    this.incomeForm = this.initializeForm();
+  }
+
+  private initializeForm(): FormGroup {
+    return this.formBuilder.group({
+      value: ['', [Validators.required]],
+      description: ['', [Validators.required]]
+    });
+  }
+
+  addIncome() {
+    const income: Income = {
+      value: this.incomeForm.get('value').value,
+      description: this.incomeForm.get('description').value
+    };
+
+    this.userService.addIncome(income)
+      .subscribe(
+        (newIncome: Income) => {
+          this.form.resetForm();
+          console.log('added: ', newIncome);
+        },
+        (error) => {
+          console.log('error');
+        }
+      );
+  }
 }

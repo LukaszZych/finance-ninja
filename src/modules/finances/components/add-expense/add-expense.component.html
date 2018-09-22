@@ -1,3 +1,27 @@
-<p>
-  add-expense works!
-</p>
+<lz-form-card>
+  <form [formGroup]="expenseForm" #form="ngForm" (ngSubmit)="addExpense()">
+    <mat-form-field class="full-width">
+      <mat-icon matPrefix>monetization_on</mat-icon>
+      <input matInput placeholder="Value" formControlName="value" type="number">
+      <mat-error *ngIf="expenseForm.get('value').invalid">Value is not valid.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width medium-bottom-margin">
+      <mat-select placeholder="Category" formControlName="category">
+        <mat-option *ngFor="let category of categories" [value]="category">
+          {{category}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="full-width medium-bottom-margin">
+      <mat-icon matPrefix>description</mat-icon>
+      <input matInput placeholder="Description" formControlName="description" type="text">
+      <mat-error *ngIf="expenseForm.get('description').invalid">Description is not valid.</mat-error>
+    </mat-form-field>
+
+    <div class="buttons">
+      <button mat-flat-button [disabled]="!expenseForm.valid" type="submit">Add</button>
+    </div>
+  </form>
+</lz-form-card>

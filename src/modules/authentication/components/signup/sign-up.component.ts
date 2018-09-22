@@ -1,9 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { catchError, filter, tap } from 'rxjs/operators';
-import { throwError } from 'rxjs';
-import { User } from '../../models/user.model';
 import { Router } from '@angular/router';
 
 @Component({

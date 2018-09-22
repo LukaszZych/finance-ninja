@@ -7,6 +7,9 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { DecodedToken } from '../models/token.model';
+import { Credentials } from '../models/credentials.model';
+import { Income } from '../../finances/models/income.model';
+import { Expense } from '../../finances/models/expense.model';
 
 
 @Injectable()
@@ -14,8 +17,6 @@ export class UserService {
 
   private jwt = new JwtHelperService();
   private decodedToken: DecodedToken;
-
-  private currentUser: User;
 
   constructor(private http: HttpClient) {
     const token = this.getToken();
@@ -31,12 +32,12 @@ export class UserService {
       })
     };
 
-    const user: User = {
+    const credentials: Credentials = {
       email: email,
       password: password
     };
 
-    return this.http.post(`${environment.serverUrl}/api/users`, user, httpOptions)
+    return this.http.post(`${environment.serverUrl}/api/users`, credentials, httpOptions)
       .pipe(
         tap((response: {email: string, token: string, _id: string}) => {
           this.saveToken(response.token);
@@ -59,12 +60,12 @@ export class UserService {
       responseType: 'text'
     };
 
-    const httpBody: User = {
+    const credentials: Credentials = {
       email: email,
       password: password
     };
 
-    return this.http.post<string>(`${environment.serverUrl}/api/auth/`, httpBody, httpOptions)
+    return this.http.post<string>(`${environment.serverUrl}/api/auth/`, credentials, httpOptions)
       .pipe(
         tap((token: string) => {
           this.saveToken(token);
@@ -73,6 +74,54 @@ export class UserService {
         map((token: string) => {
           return !!token;
         }),
+        catchError((error) => {
+          return throwError(error);
+        })
+      );
+  }
+
+  public getCurrentUser(): Observable<User> {
+    const httpOptions: object = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'x-auth-token': this.getToken()
+      })
+    };
+
+    return this.http.get<User>(`${environment.serverUrl}/api/users/me`, httpOptions)
+      .pipe(
+        catchError((error) => {
+          return throwError(error);
+        })
+      );
+  }
+
+  public addIncome(income: Income): Observable<Income> {
+    const httpOptions: object = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'x-auth-token': this.getToken()
+      })
+    };
+
+    return this.http.put<Income>(`${environment.serverUrl}/api/incomes`, income, httpOptions)
+      .pipe(
+        catchError((error) => {
+          return throwError(error);
+        })
+      );
+  }
+
+  public addExpense(expense: Expense): Observable<Expense> {
+    const httpOptions: object = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'x-auth-token': this.getToken()
+      })
+    };
+
+    return this.http.put<Expense>(`${environment.serverUrl}/api/expenses`, expense, httpOptions)
+      .pipe(
         catchError((error) => {
           return throwError(error);
         })

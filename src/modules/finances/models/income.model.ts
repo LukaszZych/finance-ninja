@@ -1,1 +1,1 @@
-export interface Income {  value: number;  description: string;  date: string;}
+export interface Income {  value: number;  description: string;  date?: string;  _id?: string;}
