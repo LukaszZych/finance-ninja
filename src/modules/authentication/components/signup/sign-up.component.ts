@@ -3,6 +3,7 @@ import { UserService } from '../../services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { catchError, filter, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'lz-sign-up',
@@ -35,16 +36,14 @@ export class SignUpComponent implements OnInit {
 
     this.userService.createUser(email, password)
       .pipe(
-        tap((response) => console.log(response)),
-        filter((response) => response.status === 200),
-        tap(() => console.log('filter works')),
         catchError((error) => {
           return throwError(error);
         })
       )
       .subscribe(
-        (response) => {
+        (response: User) => {
           console.log('subscribe: ', response);
+          this.userService.saveToken(response.token);
         },
         (error) => {
           console.log('error: ', error);

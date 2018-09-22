@@ -12,7 +12,8 @@ export class LoginComponent implements OnInit {
   public logInForm: FormGroup;
 
   constructor(private userService: UserService,
-              private formBuilder: FormBuilder) { }
+              private formBuilder: FormBuilder) {
+  }
 
   ngOnInit() {
     this.logInForm = this.initializeForm();
@@ -26,6 +27,14 @@ export class LoginComponent implements OnInit {
   }
 
   public logIn() {
-
+    this.userService.logIn(this.logInForm.get('email').value, this.logInForm.get('password').value)
+      .subscribe(
+        (token: string) => {
+          console.log('token: ', token);
+          this.userService.saveToken(token);
+        },
+        (error) => {
+          console.log('error: ', error);
+        });
   }
 }
