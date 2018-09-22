@@ -29,10 +29,13 @@ export class LoginComponent implements OnInit {
   }
 
   public logIn() {
-    this.userService.logIn(this.logInForm.get('email').value, this.logInForm.get('password').value)
+    const email = this.logInForm.get('email').value;
+    const password = this.logInForm.get('password').value;
+
+    this.userService.logIn(email, password)
       .subscribe(
-        (value) => {
-          value ? this.router.navigate(['./']) : console.log('not logged');
+        (isLogInSuccess: boolean) => {
+          isLogInSuccess ? this.router.navigate(['./']) : console.log('not logged');
         },
         (error) => {
           console.log('error: ', error);

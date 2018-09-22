@@ -36,7 +36,19 @@ export class UserService {
       password: password
     };
 
-    return this.http.post(`${environment.serverUrl}/api/users`, user, httpOptions);
+    return this.http.post(`${environment.serverUrl}/api/users`, user, httpOptions)
+      .pipe(
+        tap((response: {email: string, token: string, _id: string}) => {
+          this.saveToken(response.token);
+          this.decodedToken = this.jwt.decodeToken(this.getToken());
+        }),
+        map((response: {email: string, token: string, _id: string}) => {
+          return !!response.token;
+        }),
+        catchError((error) => {
+          return throwError(error);
+        })
+      );
   }
 
   public logIn(email: string, password: string): Observable<boolean> {

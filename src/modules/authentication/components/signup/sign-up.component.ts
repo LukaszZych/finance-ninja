@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { catchError, filter, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { User } from '../../models/user.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'lz-sign-up',
@@ -16,7 +17,8 @@ export class SignUpComponent implements OnInit {
   public registerForm: FormGroup;
 
   constructor(private userService: UserService,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -35,15 +37,9 @@ export class SignUpComponent implements OnInit {
     const password = this.registerForm.get('password').value;
 
     this.userService.createUser(email, password)
-      .pipe(
-        catchError((error) => {
-          return throwError(error);
-        })
-      )
       .subscribe(
-        (response: {email: string, token: string, _id: string}) => {
-          console.log('subscribe: ', response);
-          this.userService.saveToken(response.token);
+        (response) => {
+          this.router.navigate(['./']);
         },
         (error) => {
           console.log('error: ', error);
