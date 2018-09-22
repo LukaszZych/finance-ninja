@@ -1,17 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from './services/user.service';
-import { RegisterComponent } from './components/register/register.component';
 import { RouterModule } from '@angular/router';
-import { authenticationRoutes } from './routes/authentication.routes';
-
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+
+import { SignUpComponent } from './components/signup/sign-up.component';
 import { LoginComponent } from './components/login/login.component';
+import { authenticationRoutes } from './routes/authentication.routes';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -19,13 +16,10 @@ import { LoginComponent } from './components/login/login.component';
     RouterModule.forChild(authenticationRoutes),
     HttpClientModule,
     ReactiveFormsModule,
-    MatButtonModule,
-    MatInputModule,
-    MatIconModule,
-    MatCardModule
+    SharedModule
   ],
   declarations: [
-    RegisterComponent,
+    SignUpComponent,
     LoginComponent,
   ],
   providers: [
