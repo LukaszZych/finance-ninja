@@ -12,6 +12,7 @@
           {{category}}
         </mat-option>
       </mat-select>
+      <mat-error *ngIf="expenseForm.get('category').invalid">Please choose a category.</mat-error>
     </mat-form-field>
 
     <mat-form-field class="full-width medium-bottom-margin">

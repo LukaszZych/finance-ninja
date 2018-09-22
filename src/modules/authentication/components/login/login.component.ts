@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'lz-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   public logInForm: FormGroup;
+  private subscription = new Subscription();
 
   constructor(private userService: UserService,
               private formBuilder: FormBuilder,
@@ -19,6 +21,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.logInForm = this.initializeForm();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   private initializeForm(): FormGroup {
@@ -32,7 +38,7 @@ export class LoginComponent implements OnInit {
     const email = this.logInForm.get('email').value;
     const password = this.logInForm.get('password').value;
 
-    this.userService.logIn(email, password)
+    this.subscription = this.userService.logIn(email, password)
       .subscribe(
         (isLogInSuccess: boolean) => {
           isLogInSuccess ? this.router.navigate(['./']) : console.log('not logged');

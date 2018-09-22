@@ -1,27 +1,33 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../../../authentication/services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Expense } from '../../models/expense.model';
 import { Category } from '../../models/category.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'lz-add-expense',
   templateUrl: './add-expense.component.html',
   styleUrls: ['./add-expense.component.scss']
 })
-export class AddExpenseComponent implements OnInit {
+export class AddExpenseComponent implements OnInit, OnDestroy {
 
   public expenseForm: FormGroup;
   @ViewChild('form') form;
   public categories: Category[] = [
     'food', 'home', 'car', 'entertainment', 'clothes', 'firm', 'education'
   ];
+  private subscription = new Subscription();
 
   constructor(private userService: UserService,
               private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.expenseForm = this.initializeForm();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   private initializeForm(): FormGroup {
@@ -39,7 +45,7 @@ export class AddExpenseComponent implements OnInit {
       description: this.expenseForm.get('description').value
     };
 
-    this.userService.addExpense(expense)
+    this.subscription = this.userService.addExpense(expense)
       .subscribe(
         (newExpense: Expense) => {
           this.form.resetForm();
