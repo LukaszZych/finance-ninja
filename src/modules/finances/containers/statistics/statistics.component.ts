@@ -13,32 +13,61 @@ import { Expense } from '../../models/expense.model';
 })
 export class StatisticsComponent implements OnInit, OnDestroy {
 
-  incomesDisplayedColumns: string[] = ['date', 'value', 'description', 'delete'];
-  incomes: Income[];
+  public incomesDisplayedColumns: string[] = ['date', 'value', 'description', 'delete'];
+  public incomes: Income[];
 
-  expensesDisplayedColumns: string[] = ['date', 'category', 'value', 'description', 'delete'];
-  expenses: Expense[];
-  subscription = new Subscription();
+  public expensesDisplayedColumns: string[] = ['date', 'category', 'value', 'description', 'delete'];
+  public expenses: Expense[];
 
-  constructor(private userService: UserService) { }
+  private subscription = new Subscription();
+
+  constructor(private userService: UserService) {
+  }
 
   ngOnInit() {
-    this.subscription = this.userService.getCurrentUser()
-      .pipe(
-        tap((user: User) => {
-          console.log(user);
-          this.incomes = user.incomes;
-          this.expenses = user.expenses;
-        }),
-      )
-      .subscribe();
+    this.subscription.add(
+      this.userService.getCurrentUser()
+        .pipe(
+          tap((user: User) => {
+            this.incomes = user.incomes;
+            this.expenses = user.expenses;
+          }),
+        )
+        .subscribe()
+    );
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
-  log(element) {
-    console.log(element);
+  public removeIncome(id: string) {
+    this.subscription.add(
+      this.userService.removeIncome(id)
+        .subscribe(
+          () => {
+            this.incomes = this.incomes.filter((income) => {
+              return income._id !== id;
+            });
+          },
+          (error) => {
+            console.log('error: ', error);
+          })
+    );
+  }
+
+  public removeExpense(id: string) {
+    this.subscription.add(
+      this.userService.removeExpense(id)
+        .subscribe(
+          () => {
+            this.expenses = this.expenses.filter((expense) => {
+              return expense._id !== id;
+            });
+          },
+          (error) => {
+            console.log('error: ', error);
+          })
+    );
   }
 }

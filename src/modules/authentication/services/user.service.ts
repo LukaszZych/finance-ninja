@@ -112,6 +112,22 @@ export class UserService {
       );
   }
 
+  public removeIncome(incomeId: string): Observable<Income> {
+    const httpOptions: object = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'x-auth-token': this.getToken()
+      })
+    };
+
+    return this.http.delete<Income>(`${environment.serverUrl}/api/incomes/${incomeId}`, httpOptions)
+      .pipe(
+        catchError((error) => {
+          return throwError(error);
+        })
+      );
+  }
+
   public addExpense(expense: Expense): Observable<Expense> {
     const httpOptions: object = {
       headers: new HttpHeaders({
@@ -121,6 +137,22 @@ export class UserService {
     };
 
     return this.http.put<Expense>(`${environment.serverUrl}/api/expenses`, expense, httpOptions)
+      .pipe(
+        catchError((error) => {
+          return throwError(error);
+        })
+      );
+  }
+
+  public removeExpense(expenseId: string): Observable<Expense> {
+    const httpOptions: object = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'x-auth-token': this.getToken()
+      })
+    };
+
+    return this.http.delete<Expense>(`${environment.serverUrl}/api/expenses/${expenseId}`, httpOptions)
       .pipe(
         catchError((error) => {
           return throwError(error);
