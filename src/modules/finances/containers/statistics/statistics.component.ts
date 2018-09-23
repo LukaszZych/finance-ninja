@@ -4,6 +4,7 @@ import { UserService } from '../../../authentication/services/user.service';
 import { tap } from 'rxjs/operators';
 import { User } from '../../../authentication/models/user.model';
 import { Subscription } from 'rxjs';
+import { Expense } from '../../models/expense.model';
 
 @Component({
   selector: 'lz-statistics',
@@ -12,8 +13,11 @@ import { Subscription } from 'rxjs';
 })
 export class StatisticsComponent implements OnInit, OnDestroy {
 
-  displayedColumns: string[] = ['date', 'value', 'description', 'delete'];
-  dataSource: Income[];
+  incomesDisplayedColumns: string[] = ['date', 'value', 'description', 'delete'];
+  incomes: Income[];
+
+  expensesDisplayedColumns: string[] = ['date', 'category', 'value', 'description', 'delete'];
+  expenses: Expense[];
   subscription = new Subscription();
 
   constructor(private userService: UserService) { }
@@ -23,7 +27,8 @@ export class StatisticsComponent implements OnInit, OnDestroy {
       .pipe(
         tap((user: User) => {
           console.log(user);
-          this.dataSource = user.incomes;
+          this.incomes = user.incomes;
+          this.expenses = user.expenses;
         }),
       )
       .subscribe();
