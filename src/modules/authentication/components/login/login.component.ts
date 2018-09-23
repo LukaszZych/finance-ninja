@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'lz-login',
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(private userService: UserService,
               private formBuilder: FormBuilder,
-              private router: Router) {
+              private router: Router,
+              public snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -45,6 +47,10 @@ export class LoginComponent implements OnInit, OnDestroy {
         },
         (error) => {
           console.log('error: ', error);
+          this.snackBar.open(`Error: ${error.error}`, null, {
+            panelClass: 'force-center',
+            duration: 3000
+          });
         });
   }
 }

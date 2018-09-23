@@ -3,6 +3,7 @@ import { UserService } from '../../../authentication/services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Income } from '../../models/income.model';
 import { Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'lz-add-income',
@@ -16,7 +17,8 @@ export class AddIncomeComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
 
   constructor(private userService: UserService,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              public snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -44,10 +46,17 @@ export class AddIncomeComponent implements OnInit, OnDestroy {
       .subscribe(
         (newIncome: Income) => {
           this.form.resetForm();
-          console.log('added: ', newIncome);
+          this.snackBar.open(`New income added: ${newIncome.value}`, null, {
+            panelClass: 'force-center',
+            duration: 3000
+          });
         },
         (error) => {
-          console.log('error');
+          console.log(error);
+          this.snackBar.open(`Error: ${error.message}`, null, {
+            panelClass: 'force-center',
+            duration: 3000
+          });
         }
       );
   }

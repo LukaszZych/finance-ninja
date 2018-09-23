@@ -23,3 +23,9 @@ button:focus {outline:0;}
 .large-bottom-margin {
   margin-bottom: 2rem;
 }
+
+.force-center {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
