@@ -11,6 +11,8 @@ import { appRoutes } from './routes/app.routes';
 
 import { InfoComponent } from './components/info/info.component';
 import { SharedModule } from '../modules/shared/shared.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { SharedModule } from '../modules/shared/shared.module';
     RouterModule.forRoot(appRoutes),
     AuthenticationModule,
     FinancesModule,
-    SharedModule
+    SharedModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]
