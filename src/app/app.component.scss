@@ -1,1 +1,1 @@
-mat-toolbar {  .spacer {    flex: 1 1 auto;  }}
+@import '../assets/styles/grid';mat-toolbar {  .spacer {    flex: 1 1 auto;  }}.mobile {  display: none;  @media (max-width: $medium-breakpoint) {    display: flex;  }}.desktop {  @media (max-width: $medium-breakpoint) {    display: none;  }}
