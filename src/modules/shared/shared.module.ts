@@ -5,7 +5,7 @@ import {
   MatButtonModule,
   MatCardModule,
   MatIconModule,
-  MatSelectModule,
+  MatSelectModule, MatTableModule,
   MatToolbarModule
 } from '@angular/material';
 import { MatInputModule } from '@angular/material/input';
@@ -22,6 +22,7 @@ import { FormsModule } from '@angular/forms';
     MatInputModule,
     MatSelectModule,
     MatCardModule,
+    MatTableModule
   ],
   declarations: [
     FormCardComponent
@@ -37,6 +38,7 @@ import { FormsModule } from '@angular/forms';
     MatInputModule,
     MatCardModule,
     MatSelectModule,
+    MatTableModule
   ],
 })
 export class SharedModule {

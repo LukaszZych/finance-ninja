@@ -8,22 +8,11 @@ import { Subscription } from 'rxjs';
   templateUrl: './info.component.html',
   styleUrls: ['./info.component.scss']
 })
-export class InfoComponent implements OnInit, OnDestroy {
+export class InfoComponent implements OnInit {
 
-  private subscription = new Subscription();
-
-  constructor(private userService: UserService) {}
+  constructor() {}
 
   ngOnInit() {
-    if (this.userService.isLoggedIn()) {
-      this.subscription = this.userService.getCurrentUser()
-        .subscribe((user: User) => {
-          console.log(user);
-        });
-    }
-  }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 }

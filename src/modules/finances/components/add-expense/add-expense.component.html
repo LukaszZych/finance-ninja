@@ -6,7 +6,8 @@
       <mat-error *ngIf="expenseForm.get('value').invalid">Value is not valid.</mat-error>
     </mat-form-field>
 
-    <mat-form-field class="full-width medium-bottom-margin">
+    <mat-form-field class="full-width">
+      <mat-icon matPrefix>category</mat-icon>
       <mat-select placeholder="Category" formControlName="category">
         <mat-option *ngFor="let category of categories" [value]="category">
           {{category}}
