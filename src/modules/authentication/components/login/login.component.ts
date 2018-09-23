@@ -36,8 +36,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
+  public goToSignUp() {
+    this.router.navigate(['./signup']);
+  }
+
   public logIn() {
-    const email = this.logInForm.get('email').value;
+    const email = this.logInForm.get('email').value.trim();
     const password = this.logInForm.get('password').value;
 
     this.subscription = this.userService.logIn(email, password)

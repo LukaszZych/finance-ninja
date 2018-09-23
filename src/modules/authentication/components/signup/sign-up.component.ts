@@ -38,7 +38,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   }
 
   public registerUser() {
-    const email = this.registerForm.get('email').value;
+    const email = this.registerForm.get('email').value.trim();
     const password = this.registerForm.get('password').value;
 
     this.subscription = this.userService.createUser(email, password)
