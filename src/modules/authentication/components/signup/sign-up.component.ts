@@ -13,6 +13,7 @@ import { MatSnackBar } from '@angular/material';
 })
 export class SignUpComponent implements OnInit, OnDestroy {
 
+  public isLoading = false;
   public registerForm: FormGroup;
   private subscription = new Subscription();
 
@@ -40,14 +41,17 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public registerUser() {
     const email = this.registerForm.get('email').value.trim();
     const password = this.registerForm.get('password').value;
+    this.isLoading = true;
 
     this.subscription = this.userService.createUser(email, password)
       .subscribe(
         (response) => {
+          this.isLoading = false;
           this.router.navigate(['./']);
         },
         (error) => {
           console.log('error: ', error);
+          this.isLoading = false;
           this.snackBar.open(`Error: ${error.error}`, null, {
             panelClass: 'force-center',
             duration: 3000

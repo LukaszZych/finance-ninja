@@ -1,4 +1,4 @@
-<lz-form-card>
+<lz-form-card *ngIf="!isLoading">
   <form [formGroup]="logInForm" (ngSubmit)="logIn()">
     <mat-form-field class="full-width">
       <mat-icon matPrefix>email</mat-icon>
@@ -18,3 +18,7 @@
     </div>
   </form>
 </lz-form-card>
+
+<div class="force-center" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>

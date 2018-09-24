@@ -5,7 +5,7 @@ import {
   MatButtonModule,
   MatCardModule,
   MatIconModule,
-  MatMenuModule,
+  MatMenuModule, MatProgressSpinnerModule,
   MatSelectModule,
   MatSnackBarModule,
   MatTableModule,
@@ -27,7 +27,8 @@ import { FormsModule } from '@angular/forms';
     MatCardModule,
     MatTableModule,
     MatSnackBarModule,
-    MatMenuModule
+    MatMenuModule,
+    MatProgressSpinnerModule
   ],
   declarations: [
     FormCardComponent
@@ -45,7 +46,8 @@ import { FormsModule } from '@angular/forms';
     MatSelectModule,
     MatTableModule,
     MatSnackBarModule,
-    MatMenuModule
+    MatMenuModule,
+    MatProgressSpinnerModule
   ],
 })
 export class SharedModule {
