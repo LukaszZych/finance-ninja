@@ -9,7 +9,7 @@ import { FinancesModule } from '../modules/finances/finances.module';
 import { AuthenticationModule } from '../modules/authentication/authentication.module';
 import { appRoutes } from './routes/app.routes';
 
-import { InfoComponent } from './components/info/info.component';
+import { HomeComponent } from './components/home/home.component';
 import { SharedModule } from '../modules/shared/shared.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
@@ -17,7 +17,7 @@ import { environment } from '../environments/environment';
 @NgModule({
   declarations: [
     AppComponent,
-    InfoComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
