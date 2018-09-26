@@ -5,7 +5,7 @@ import { AddExpenseComponent } from './components/add-expense/add-expense.compon
 import { AddIncomeComponent } from './components/add-income/add-income.component';
 import { RouterModule } from '@angular/router';
 import { financeRoutes } from './routes/finance.routes';
-import { StatisticsComponent } from './containers/statistics/statistics.component';
+import { DataComponent } from './containers/data/data.component';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -19,7 +19,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   declarations: [
     AddExpenseComponent,
     AddIncomeComponent,
-    StatisticsComponent
+    DataComponent
   ]
 })
 export class FinancesModule { }

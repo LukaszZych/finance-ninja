@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../modules/authentication/services/user.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';

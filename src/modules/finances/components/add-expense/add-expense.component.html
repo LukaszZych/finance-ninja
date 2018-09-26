@@ -1,29 +1,37 @@
-<lz-form-card>
-  <form [formGroup]="expenseForm" #form="ngForm" (ngSubmit)="addExpense()">
-    <mat-form-field class="full-width">
-      <mat-icon matPrefix>monetization_on</mat-icon>
-      <input matInput placeholder="Value" formControlName="value" type="number">
-      <mat-error *ngIf="expenseForm.get('value').invalid">Value is not valid.</mat-error>
-    </mat-form-field>
+<div class="lz-container">
+  <div class="lz-row">
+    <div class="lz-col-12 center-container">
 
-    <mat-form-field class="full-width">
-      <mat-icon matPrefix>category</mat-icon>
-      <mat-select placeholder="Category" formControlName="category">
-        <mat-option *ngFor="let category of categories" [value]="category">
-          {{category}}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="expenseForm.get('category').invalid">Please choose a category.</mat-error>
-    </mat-form-field>
+      <lz-form-card>
+        <form [formGroup]="expenseForm" #form="ngForm" (ngSubmit)="addExpense()">
+          <mat-form-field class="full-width">
+            <mat-icon matPrefix>attach_money</mat-icon>
+            <input matInput placeholder="Value" formControlName="value" type="number">
+            <mat-error *ngIf="expenseForm.get('value').invalid">Value is not valid.</mat-error>
+          </mat-form-field>
 
-    <mat-form-field class="full-width medium-bottom-margin">
-      <mat-icon matPrefix>description</mat-icon>
-      <input matInput placeholder="Description" formControlName="description" type="text">
-      <mat-error *ngIf="expenseForm.get('description').invalid">Description is not valid.</mat-error>
-    </mat-form-field>
+          <mat-form-field class="full-width">
+            <mat-icon matPrefix>pie_chart</mat-icon>
+            <mat-select placeholder="Category" formControlName="category">
+              <mat-option *ngFor="let category of categories" [value]="category">
+                {{category}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="expenseForm.get('category').invalid">Please choose a category.</mat-error>
+          </mat-form-field>
 
-    <div class="buttons">
-      <button mat-flat-button [disabled]="!expenseForm.valid" type="submit">Add</button>
+          <mat-form-field class="full-width medium-bottom-margin">
+            <mat-icon matPrefix>create</mat-icon>
+            <input matInput placeholder="Description" formControlName="description" type="text">
+            <mat-error *ngIf="expenseForm.get('description').invalid">Description is not valid.</mat-error>
+          </mat-form-field>
+
+          <div class="buttons">
+            <button mat-flat-button [disabled]="!expenseForm.valid" type="submit">Add</button>
+          </div>
+        </form>
+      </lz-form-card>
+
     </div>
-  </form>
-</lz-form-card>
+  </div>
+</div>
