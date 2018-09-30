@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../modules/shared/services/user.service';
+import { UserService } from './modules/finances/services/user.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
-import { TokenService } from '../modules/shared/services/token.service';
+import { TokenService } from './modules/shared/services/token.service';
 
 @Component({
   selector: 'lz-root',
