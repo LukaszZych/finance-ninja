@@ -1,10 +1,12 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { UserService } from '../../../authentication/services/user.service';
+import { UserService } from '../../../shared/services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Expense } from '../../models/expense.model';
 import { Category } from '../../models/category.model';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
+import { ExpenseService } from '../../services/expense.service';
+import { TokenService } from '../../../shared/services/token.service';
 
 @Component({
   selector: 'lz-add-expense',
@@ -20,7 +22,8 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   ];
   private subscription = new Subscription();
 
-  constructor(private userService: UserService,
+  constructor(private expenseService: ExpenseService,
+              private tokenService: TokenService,
               private formBuilder: FormBuilder,
               public snackBar: MatSnackBar) {
   }
@@ -48,7 +51,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
       description: this.expenseForm.get('description').value
     };
 
-    this.subscription = this.userService.addExpense(expense)
+    this.subscription = this.expenseService.addExpense(expense, this.tokenService.getToken())
       .subscribe(
         (newExpense: Expense) => {
           this.form.resetForm();

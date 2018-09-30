@@ -1,10 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Income } from '../../models/income.model';
-import { UserService } from '../../../authentication/services/user.service';
-import { map, tap } from 'rxjs/operators';
+import { UserService } from '../../../shared/services/user.service';
+import { map } from 'rxjs/operators';
 import { User } from '../../../authentication/models/user.model';
 import { Subscription } from 'rxjs';
 import { Expense } from '../../models/expense.model';
+import { TokenService } from '../../../shared/services/token.service';
+import { IncomeService } from '../../services/income.service';
+import { ExpenseService } from '../../services/expense.service';
 
 @Component({
   selector: 'lz-data',
@@ -19,12 +22,15 @@ export class DataComponent implements OnInit, OnDestroy {
 
   private subscription = new Subscription();
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,
+              private incomeService: IncomeService,
+              private expenseService: ExpenseService,
+              private token: TokenService) {
   }
 
   ngOnInit() {
     this.subscription.add(
-      this.userService.getCurrentUser()
+      this.userService.getCurrentUser(this.token.getToken())
         .pipe(
           map((user: User) => {
             return [...user.incomes, ...user.expenses];
@@ -78,7 +84,7 @@ export class DataComponent implements OnInit, OnDestroy {
 
   private removeIncome(id: string) {
     this.subscription.add(
-      this.userService.removeIncome(id)
+      this.incomeService.removeIncome(id, this.token.getToken())
         .subscribe(
           () => {
             this.finances = this.finances.filter((income) => {
@@ -93,7 +99,7 @@ export class DataComponent implements OnInit, OnDestroy {
 
   private removeExpense(id: string) {
     this.subscription.add(
-      this.userService.removeExpense(id)
+      this.expenseService.removeExpense(id, this.token.getToken())
         .subscribe(
           () => {
             this.finances = this.finances.filter((expense) => {

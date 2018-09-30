@@ -9,6 +9,9 @@ import { DataComponent } from './containers/data/data.component';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { ExpenseService } from './services/expense.service';
+import { IncomeService } from './services/income.service';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -20,6 +23,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     AddExpenseComponent,
     AddIncomeComponent,
     DataComponent
+  ],
+  providers: [
+    ExpenseService,
+    IncomeService
   ]
 })
 export class FinancesModule { }

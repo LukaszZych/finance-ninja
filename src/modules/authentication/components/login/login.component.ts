@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
-import { delay, tap } from 'rxjs/operators';
+import { AuthenticationService } from '../../services/authentication.service';
+import { TokenService } from '../../../shared/services/token.service';
 
 @Component({
   selector: 'lz-login',
@@ -17,7 +17,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   public logInForm: FormGroup;
   private subscription = new Subscription();
 
-  constructor(private userService: UserService,
+  constructor(private authenticationService: AuthenticationService,
+              private tokenService: TokenService,
               private formBuilder: FormBuilder,
               private router: Router,
               public snackBar: MatSnackBar) {
@@ -47,11 +48,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     const password = this.logInForm.get('password').value;
     this.isLoading = true;
 
-    this.subscription = this.userService.logIn(email, password)
+    this.subscription = this.authenticationService.logIn({email, password})
       .subscribe(
-        (isLogInSuccess: boolean) => {
+        (token: string) => {
+          this.tokenService.saveToken(token);
           this.isLoading = false;
-          isLogInSuccess ? this.router.navigate(['./']) : console.log('not logged');
+          !!token ? this.router.navigate(['./data']) : console.log('not logged');
         },
         (error) => {
           this.isLoading = false;

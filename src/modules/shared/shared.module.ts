@@ -14,6 +14,8 @@ import {
 import { MatInputModule } from '@angular/material/input';
 import { AuthGuard } from './guards/auth.guard';
 import { FormsModule } from '@angular/forms';
+import { TokenService } from './services/token.service';
+import { UserService } from './services/user.service';
 
 @NgModule({
   imports: [
@@ -34,7 +36,9 @@ import { FormsModule } from '@angular/forms';
     FormCardComponent
   ],
   providers: [
-    AuthGuard
+    AuthGuard,
+    TokenService,
+    UserService
   ],
   exports: [
     FormCardComponent,

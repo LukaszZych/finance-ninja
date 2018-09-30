@@ -1,0 +1,1 @@
+import * as fromUser from './user.reducer';import { ActionReducerMap } from '@ngrx/store';// Interfejs stanu całego modułuexport interface FinancesState {  user: fromUser.UserState;}// Wszystkie reducery dla całego modułuexport const reducers: ActionReducerMap<FinancesState> = {  user: fromUser.userReducer};

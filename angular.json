@@ -54,6 +54,14 @@
               "buildOptimizer": true,
               "serviceWorker": true
             },
+            "staging": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.staging.ts"
+                }
+              ]
+            },
             "development": {
               "fileReplacements": [
                 {
@@ -72,6 +80,9 @@
           "configurations": {
             "production": {
               "browserTarget": "finance-ninja-app:build:production"
+            },
+            "staging": {
+              "browserTarget": "finance-ninja-app:build:staging"
             },
             "development": {
               "browserTarget": "finance-ninja-app:build:development"

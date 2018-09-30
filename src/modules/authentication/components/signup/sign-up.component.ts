@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { UserService } from '../../services/user.service';
+import { UserService } from '../../../shared/services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
+import { TokenService } from '../../../shared/services/token.service';
 
 @Component({
   selector: 'lz-sign-up',
@@ -17,6 +18,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
 
   constructor(private userService: UserService,
+              private tokenService: TokenService,
               private formBuilder: FormBuilder,
               private router: Router,
               public snackBar: MatSnackBar) {
@@ -42,9 +44,10 @@ export class SignUpComponent implements OnInit, OnDestroy {
     const password = this.registerForm.get('password').value;
     this.isLoading = true;
 
-    this.subscription = this.userService.createUser(email, password)
+    this.subscription = this.userService.createUser({email, password})
       .subscribe(
         (response) => {
+          this.tokenService.saveToken(response.token);
           this.isLoading = false;
           this.router.navigate(['./']);
         },

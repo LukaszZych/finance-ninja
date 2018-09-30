@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { UserService } from '../../../authentication/services/user.service';
+import { UserService } from '../../../shared/services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Income } from '../../models/income.model';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
+import { IncomeService } from '../../services/income.service';
+import { TokenService } from '../../../shared/services/token.service';
 
 @Component({
   selector: 'lz-add-income',
@@ -16,7 +18,8 @@ export class AddIncomeComponent implements OnInit, OnDestroy {
   @ViewChild('form') form;
   private subscription = new Subscription();
 
-  constructor(private userService: UserService,
+  constructor(private incomeService: IncomeService,
+              private token: TokenService,
               private formBuilder: FormBuilder,
               public snackBar: MatSnackBar) {
   }
@@ -42,7 +45,7 @@ export class AddIncomeComponent implements OnInit, OnDestroy {
       description: this.incomeForm.get('description').value
     };
 
-    this.subscription = this.userService.addIncome(income)
+    this.subscription = this.incomeService.addIncome(income, this.token.getToken())
       .subscribe(
         (newIncome: Income) => {
           this.form.resetForm();
