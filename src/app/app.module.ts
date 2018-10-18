@@ -4,13 +4,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { AppComponent } from './app.component';
-import { FinancesModule } from './modules/finances/finances.module';
-import { AuthenticationModule } from './modules/authentication/authentication.module';
-import { appRoutes } from './routes/app.routes';
+import { AppComponent } from './core/containers/app/app.component';
+import { FinancesModule } from './finances/finances.module';
+import { AuthenticationModule } from './authentication/authentication.module';
+import { appRoutes } from './core/routes/app.routes';
 
-import { HomeComponent } from './components/home/home.component';
-import { SharedModule } from './modules/shared/shared.module';
+import { HomeComponent } from './core/components/home/home.component';
+import { SharedModule } from './shared/shared.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { StoreModule } from '@ngrx/store';

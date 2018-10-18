@@ -1,0 +1,1 @@
+// Todo remove in backend and return just a tokenexport interface CreatedUser {  email: string;  token: string;  _id: string;}
