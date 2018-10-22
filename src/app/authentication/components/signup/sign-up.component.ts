@@ -1,10 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 import { TokenService } from '../../services/token.service';
 import { AuthenticationService } from '../../services/authentication.service';
+import { Store } from '@ngrx/store';
+import { AuthenticationState } from '../../store/reducers';
+import * as authActions from '../../store/actions/auth.actions';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'lz-sign-up',
@@ -13,19 +17,25 @@ import { AuthenticationService } from '../../services/authentication.service';
 })
 export class SignUpComponent implements OnInit, OnDestroy {
 
-  public isLoading = false;
+  public isLoading$: Observable<boolean>;
   public registerForm: FormGroup;
   private subscription = new Subscription();
 
   constructor(private authService: AuthenticationService,
               private tokenService: TokenService,
               private formBuilder: FormBuilder,
-              private router: Router,
-              public snackBar: MatSnackBar) {
+              private store: Store<AuthenticationState>) {
   }
 
   ngOnInit() {
     this.registerForm = this.initializeForm();
+
+    this.isLoading$ = this.store.select('authenticationFeature')
+      .pipe(
+        map((appState: AuthenticationState) => {
+          return appState.authenticationState.loading;
+        })
+      );
   }
 
   ngOnDestroy() {
@@ -40,25 +50,33 @@ export class SignUpComponent implements OnInit, OnDestroy {
   }
 
   public registerUser() {
-    const email = this.registerForm.get('email').value.trim();
-    const password = this.registerForm.get('password').value;
-    this.isLoading = true;
+    // const email = this.registerForm.get('email').value.trim();
+    // const password = this.registerForm.get('password').value;
+    // this.isLoading = true;
+    //
+    // this.subscription = this.authService.createUser({email, password})
+    //   .subscribe(
+    //     (response) => {
+    //       console.log('response: ', response);
+    //       this.tokenService.saveToken(response.token);
+    //       this.isLoading = false;
+    //       this.router.navigate(['./']);
+    //     },
+    //     (error) => {
+    //       console.log('error: ', error);
+    //       this.isLoading = false;
+    //       this.snackBar.open(`Error: ${error.error}`, null, {
+    //         panelClass: 'force-center',
+    //         duration: 3000
+    //       });
+    //     }
+    //   );
 
-    this.subscription = this.authService.createUser({email, password})
-      .subscribe(
-        (response) => {
-          this.tokenService.saveToken(response.token);
-          this.isLoading = false;
-          this.router.navigate(['./']);
-        },
-        (error) => {
-          console.log('error: ', error);
-          this.isLoading = false;
-          this.snackBar.open(`Error: ${error.error}`, null, {
-            panelClass: 'force-center',
-            duration: 3000
-          });
-        }
-      );
+    // this.store.dispatch(new authActions.SignIn(
+    //   {
+    //     email: this.registerForm.get('email').value.trim(),
+    //     password: this.registerForm.get('password').value
+    //   }
+    // ));
   }
 }

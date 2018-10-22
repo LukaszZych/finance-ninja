@@ -1,24 +1,32 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../../finances/services/user.service';
-import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
-import { TokenService } from '../../../authentication/services/token.service';
+import * as authActions from '../../../authentication/store/actions/auth.actions';
+import { Store } from '@ngrx/store';
+import { AuthenticationState } from '../../../authentication/store/reducers';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'lz-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  constructor(private router: Router,
-              public snackBar: MatSnackBar) {
+export class AppComponent implements OnInit {
+
+  isAuthenticated$: Observable<boolean>;
+
+  constructor(private store: Store<AuthenticationState>) {
+  }
+
+  ngOnInit(): void {
+    this.isAuthenticated$ = this.store.select('authenticationFeature')
+      .pipe(
+        map((appState: AuthenticationState) => {
+          return appState.authenticationState.isAuthenticated;
+        })
+      );
   }
 
   public logOut() {
-    this.router.navigate(['./']);
-    this.snackBar.open(`Logout successful`, null, {
-      panelClass: 'force-center',
-      duration: 3000
-    });
+    this.store.dispatch(new authActions.LogOut());
   }
 }

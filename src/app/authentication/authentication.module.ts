@@ -10,9 +10,9 @@ import { SharedModule } from '../shared/shared.module';
 import * as fromComponents from './components/index';
 import * as fromServices from './services/index';
 import { StoreModule } from '@ngrx/store';
-import { authenticationReducers } from './store/reducers/index';
+import { authenticationReducers } from './store/reducers';
 import { EffectsModule } from '@ngrx/effects';
-import { authenticationEffects } from './store/effects/index';
+import { authenticationEffects } from './store/effects';
 
 @NgModule({
   imports: [
@@ -21,7 +21,7 @@ import { authenticationEffects } from './store/effects/index';
     HttpClientModule,
     ReactiveFormsModule,
     SharedModule,
-    StoreModule.forFeature('authentication', authenticationReducers),
+    StoreModule.forFeature('authenticationFeature', authenticationReducers),
     EffectsModule.forFeature(authenticationEffects)
   ],
   declarations: [...fromComponents.components],
