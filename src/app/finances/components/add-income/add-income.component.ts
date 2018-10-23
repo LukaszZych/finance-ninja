@@ -5,7 +5,6 @@ import { Income } from '../../models/income.model';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 import { IncomeService } from '../../services/income.service';
-import { TokenService } from '../../../authentication/services/token.service';
 
 @Component({
   selector: 'lz-add-income',
@@ -19,7 +18,6 @@ export class AddIncomeComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
 
   constructor(private incomeService: IncomeService,
-              private token: TokenService,
               private formBuilder: FormBuilder,
               public snackBar: MatSnackBar) {
   }
@@ -45,22 +43,22 @@ export class AddIncomeComponent implements OnInit, OnDestroy {
       description: this.incomeForm.get('description').value
     };
 
-    this.subscription = this.incomeService.addIncome(income, this.token.getToken())
-      .subscribe(
-        (newIncome: Income) => {
-          this.form.resetForm();
-          this.snackBar.open(`New income added: ${newIncome.value}`, null, {
-            panelClass: 'force-center',
-            duration: 3000
-          });
-        },
-        (error) => {
-          console.log(error);
-          this.snackBar.open(`Error: ${error.message}`, null, {
-            panelClass: 'force-center',
-            duration: 3000
-          });
-        }
-      );
+    // this.subscription = this.incomeService.addIncome(income, this.token.getToken())
+    //   .subscribe(
+    //     (newIncome: Income) => {
+    //       this.form.resetForm();
+    //       this.snackBar.open(`New income added: ${newIncome.value}`, null, {
+    //         panelClass: 'force-center',
+    //         duration: 3000
+    //       });
+    //     },
+    //     (error) => {
+    //       console.log(error);
+    //       this.snackBar.open(`Error: ${error.message}`, null, {
+    //         panelClass: 'force-center',
+    //         duration: 3000
+    //       });
+    //     }
+    //   );
   }
 }

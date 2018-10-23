@@ -5,7 +5,6 @@ import { Category } from '../../models/category.model';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 import { ExpenseService } from '../../services/expense.service';
-import { TokenService } from '../../../authentication/services/token.service';
 
 @Component({
   selector: 'lz-add-expense',
@@ -22,7 +21,6 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
 
   constructor(private expenseService: ExpenseService,
-              private tokenService: TokenService,
               private formBuilder: FormBuilder,
               public snackBar: MatSnackBar) {
   }
@@ -50,22 +48,22 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
       description: this.expenseForm.get('description').value
     };
 
-    this.subscription = this.expenseService.addExpense(expense, this.tokenService.getToken())
-      .subscribe(
-        (newExpense: Expense) => {
-          this.form.resetForm();
-          this.snackBar.open(`New expense added: ${newExpense.value}`, null, {
-            panelClass: 'force-center',
-            duration: 3000
-          });
-        },
-        (error) => {
-          console.log(error);
-          this.snackBar.open(`Error: ${error.message}`, null, {
-            panelClass: 'force-center',
-            duration: 3000
-          });
-        }
-      );
+    // this.subscription = this.expenseService.addExpense(expense, this.tokenService.getToken())
+    //   .subscribe(
+    //     (newExpense: Expense) => {
+    //       this.form.resetForm();
+    //       this.snackBar.open(`New expense added: ${newExpense.value}`, null, {
+    //         panelClass: 'force-center',
+    //         duration: 3000
+    //       });
+    //     },
+    //     (error) => {
+    //       console.log(error);
+    //       this.snackBar.open(`Error: ${error.message}`, null, {
+    //         panelClass: 'force-center',
+    //         duration: 3000
+    //       });
+    //     }
+    //   );
   }
 }

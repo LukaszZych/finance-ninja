@@ -1,9 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { MatSnackBar } from '@angular/material';
-import { TokenService } from '../../services/token.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Store } from '@ngrx/store';
 import { AuthenticationState } from '../../store/reducers';
@@ -22,7 +19,6 @@ export class SignUpComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
 
   constructor(private authService: AuthenticationService,
-              private tokenService: TokenService,
               private formBuilder: FormBuilder,
               private store: Store<AuthenticationState>) {
   }
@@ -72,11 +68,11 @@ export class SignUpComponent implements OnInit, OnDestroy {
     //     }
     //   );
 
-    // this.store.dispatch(new authActions.SignIn(
-    //   {
-    //     email: this.registerForm.get('email').value.trim(),
-    //     password: this.registerForm.get('password').value
-    //   }
-    // ));
+    this.store.dispatch(new authActions.SignIn(
+      {
+        email: this.registerForm.get('email').value.trim(),
+        password: this.registerForm.get('password').value
+      }
+    ));
   }
 }

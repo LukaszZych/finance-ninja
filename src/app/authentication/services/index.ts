@@ -1,1 +1,1 @@
-import { AuthenticationService } from './authentication.service';import { TokenService } from './token.service';export const services: any[] = [  AuthenticationService,  TokenService];export * from './authentication.service';
+import { AuthenticationService } from './authentication.service';export const services: any[] = [  AuthenticationService];export * from './authentication.service';

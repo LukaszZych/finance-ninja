@@ -4,7 +4,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Credentials } from '../models/credentials.model';
 import { environment } from '../../../environments/environment';
 import { catchError } from 'rxjs/operators';
-import { CreatedUser } from '../models/created-user.model';
 
 @Injectable()
 export class AuthenticationService {
@@ -23,14 +22,14 @@ export class AuthenticationService {
       .pipe(catchError((error) => throwError(error)));
   }
 
-  public createUser(credentials: Credentials): Observable<CreatedUser> {
+  public createUser(credentials: Credentials): Observable<string> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
     };
 
-    return this.http.post<CreatedUser>(`${environment.serverUrl}/api/users`, credentials, httpOptions)
+    return this.http.post<string>(`${environment.serverUrl}/api/users`, credentials, httpOptions)
       .pipe(catchError((error) => throwError(error)));
   }
 }

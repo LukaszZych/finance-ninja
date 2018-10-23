@@ -5,7 +5,6 @@ import { map } from 'rxjs/operators';
 import { User } from '../../../authentication/models/user.model';
 import { Subscription } from 'rxjs';
 import { Expense } from '../../models/expense.model';
-import { TokenService } from '../../../authentication/services/token.service';
 import { IncomeService } from '../../services/income.service';
 import { ExpenseService } from '../../services/expense.service';
 
@@ -24,31 +23,30 @@ export class DataComponent implements OnInit, OnDestroy {
 
   constructor(private userService: UserService,
               private incomeService: IncomeService,
-              private expenseService: ExpenseService,
-              private token: TokenService) {
+              private expenseService: ExpenseService) {
   }
 
   ngOnInit() {
-    this.subscription.add(
-      this.userService.getCurrentUser(this.token.getToken())
-        .pipe(
-          map((user: User) => {
-            return [...user.incomes, ...user.expenses];
-          }),
-          map((finances: Array<Income | Expense>) => {
-            for (const val of finances) {
-              if (!val.hasOwnProperty('category')) {
-                val['category'] = 'income';
-              }
-            }
-            return finances;
-          })
-        )
-        .subscribe((finances: Expense[]) => {
-          this.isLoading = false;
-          this.finances = finances;
-        })
-    );
+    // this.subscription.add(
+    //   this.userService.getCurrentUser(this.token.getToken())
+    //     .pipe(
+    //       map((user: User) => {
+    //         return [...user.incomes, ...user.expenses];
+    //       }),
+    //       map((finances: Array<Income | Expense>) => {
+    //         for (const val of finances) {
+    //           if (!val.hasOwnProperty('category')) {
+    //             val['category'] = 'income';
+    //           }
+    //         }
+    //         return finances;
+    //       })
+    //     )
+    //     .subscribe((finances: Expense[]) => {
+    //       this.isLoading = false;
+    //       this.finances = finances;
+    //     })
+    // );
   }
 
   ngOnDestroy() {
@@ -83,32 +81,32 @@ export class DataComponent implements OnInit, OnDestroy {
   }
 
   private removeIncome(id: string) {
-    this.subscription.add(
-      this.incomeService.removeIncome(id, this.token.getToken())
-        .subscribe(
-          () => {
-            this.finances = this.finances.filter((income) => {
-              return income._id !== id;
-            });
-          },
-          (error) => {
-            console.log('error: ', error);
-          })
-    );
+    // this.subscription.add(
+      // this.incomeService.removeIncome(id, this.token.getToken())
+      //   .subscribe(
+      //     () => {
+      //       this.finances = this.finances.filter((income) => {
+      //         return income._id !== id;
+      //       });
+      //     },
+      //     (error) => {
+      //       console.log('error: ', error);
+      //     })
+    // );
   }
 
   private removeExpense(id: string) {
-    this.subscription.add(
-      this.expenseService.removeExpense(id, this.token.getToken())
-        .subscribe(
-          () => {
-            this.finances = this.finances.filter((expense) => {
-              return expense._id !== id;
-            });
-          },
-          (error) => {
-            console.log('error: ', error);
-          })
-    );
+    // this.subscription.add(
+      // this.expenseService.removeExpense(id, this.token.getToken())
+      //   .subscribe(
+      //     () => {
+      //       this.finances = this.finances.filter((expense) => {
+      //         return expense._id !== id;
+      //       });
+      //     },
+      //     (error) => {
+      //       console.log('error: ', error);
+      //     })
+    // );
   }
 }
