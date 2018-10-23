@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as authActions from '../../../authentication/store/actions/auth.actions';
 import { Store } from '@ngrx/store';
-import { AuthenticationState } from '../../../authentication/store/reducers';
+// import { AuthenticationState, getAunthenticationToken } from '../../../authentication/store/reducers';
+import * as fromStore from '../../../authentication/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -16,16 +17,16 @@ export class AppComponent implements OnInit {
   public isAuthenticated$: Observable<boolean>;
   private jwt = new JwtHelperService();
 
-  constructor(private store: Store<AuthenticationState>) {
+  constructor(private store: Store<fromStore.AuthenticationState>) {
   }
 
   ngOnInit(): void {
     this.logWithTheToken();
 
-    this.isAuthenticated$ = this.store.select('authenticationFeature')
+    this.isAuthenticated$ = this.store.select(fromStore.getAunthenticationToken)
       .pipe(
-        map((appState: AuthenticationState) => {
-          return !!appState.authenticationState.token;
+        map((token: string) => {
+          return !!token;
         })
       );
   }
