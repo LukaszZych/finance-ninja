@@ -16,6 +16,7 @@ import { MetaReducer, StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { CoreModule } from './core/core.module';
+import { AuthGuard } from './authentication/guards/auth.guard';
 
 // chroni stan przed mutacją przy developmencie (np gdyby reducer został nieprawidłowo napisany)
 import { storeFreeze } from 'ngrx-store-freeze';
@@ -42,7 +43,7 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     !environment.production ? StoreDevtoolsModule.instrument({maxAge: 10}) : [],
     environment.production ? ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production }) : []
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {

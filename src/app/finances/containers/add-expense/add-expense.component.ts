@@ -1,36 +1,33 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Expense } from '../../models/expense.model';
 import { Category } from '../../models/category.model';
-import { Subscription } from 'rxjs';
-import { MatSnackBar } from '@angular/material';
-import { ExpenseService } from '../../services/expense.service';
+import { combineLatest, of } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { FinancesState } from '../../store/reducers';
+import { authenticationSelectors } from '../../../authentication/store/selectors/authentication.selectors';
+import { first } from 'rxjs/operators';
+import { Income } from '../../models/income.model';
+import { AddExpense, AddIncome } from '../../store/actions';
+import { Expense } from '../../models/expense.model';
 
 @Component({
   selector: 'lz-add-expense',
   templateUrl: './add-expense.component.html',
   styleUrls: ['./add-expense.component.scss']
 })
-export class AddExpenseComponent implements OnInit, OnDestroy {
+export class AddExpenseComponent implements OnInit {
 
   @ViewChild('form') form;
   public expenseForm: FormGroup;
   public categories: Category[] = [
     'food', 'home', 'car', 'entertainment', 'clothes', 'firm', 'education'
   ];
-  private subscription = new Subscription();
 
-  constructor(private expenseService: ExpenseService,
-              private formBuilder: FormBuilder,
-              public snackBar: MatSnackBar) {
-  }
+  constructor(private formBuilder: FormBuilder,
+              private store: Store<FinancesState>) {}
 
   ngOnInit() {
     this.expenseForm = this.initializeForm();
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
   private initializeForm(): FormGroup {
@@ -41,29 +38,14 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     });
   }
 
-  addExpense() {
-    const expense: Expense = {
-      value: this.expenseForm.get('value').value,
-      category: this.expenseForm.get('category').value,
-      description: this.expenseForm.get('description').value
-    };
+  public addExpense() {
+    const expense = of(this.expenseForm.getRawValue());
+    const token = this.store.select(authenticationSelectors.token);
 
-    // this.subscription = this.expenseService.addExpense(expense, this.tokenService.getToken())
-    //   .subscribe(
-    //     (newExpense: Expense) => {
-    //       this.form.resetForm();
-    //       this.snackBar.open(`New expense added: ${newExpense.value}`, null, {
-    //         panelClass: 'force-center',
-    //         duration: 3000
-    //       });
-    //     },
-    //     (error) => {
-    //       console.log(error);
-    //       this.snackBar.open(`Error: ${error.message}`, null, {
-    //         panelClass: 'force-center',
-    //         duration: 3000
-    //       });
-    //     }
-    //   );
+    combineLatest(expense, token)
+      .pipe(first())
+      .subscribe(([newExpense, currentToken]: [Expense, string]) => {
+        this.store.dispatch(new AddExpense(newExpense, currentToken));
+      });
   }
 }

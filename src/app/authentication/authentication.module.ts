@@ -10,7 +10,7 @@ import { SharedModule } from '../shared/shared.module';
 import { StoreModule } from '@ngrx/store';
 import { authenticationReducer } from './store/reducers';
 import { EffectsModule } from '@ngrx/effects';
-import { LoginComponent, SignUpComponent } from './components';
+import { LoginComponent, SignUpComponent } from './containers';
 import { AuthenticationService } from './services';
 import { AuthEffects } from './store/effects';
 

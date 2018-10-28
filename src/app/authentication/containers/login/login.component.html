@@ -2,7 +2,7 @@
   <div class="lz-row">
     <div class="lz-col-12 center-container">
 
-      <lz-form-card *ngIf="!(isLoading$ | async)">
+      <lz-form-card *ngIf="!(isLoading$ | async) as loading">
         <div class="logo"></div>
 
         <form [formGroup]="logInForm" (ngSubmit)="logIn()">

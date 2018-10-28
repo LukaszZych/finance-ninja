@@ -39,11 +39,6 @@ export class LoginComponent implements OnInit {
   }
 
   public logIn() {
-    this.store.dispatch(new LogIn(
-      {
-        email: this.logInForm.get('email').value.trim(),
-        password: this.logInForm.get('password').value
-      }
-    ));
+    this.store.dispatch(new LogIn(this.logInForm.getRawValue()));
   }
 }

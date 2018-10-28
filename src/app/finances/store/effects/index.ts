@@ -1,1 +1,1 @@
-import { FinancesEffects } from './finances.effects';export const financesEffects: any[] = [  FinancesEffects];export * from './finances.effects';
+import { UserEffects } from './user.effects';import { IncomeEffects } from './income.effects';import { ExpenseEffects } from './expense.effects';export const financesEffects: any[] = [  UserEffects,  IncomeEffects,  ExpenseEffects];export * from './user.effects';export * from './income.effects';export * from './expense.effects';

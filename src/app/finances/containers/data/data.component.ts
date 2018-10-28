@@ -3,7 +3,7 @@ import { Income } from '../../models/income.model';
 import { combineLatest, Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { FinancesState } from '../../store/reducers';
-import { LoadUser, RemoveIncome } from '../../store/actions';
+import { LoadUser, RemoveExpense, RemoveIncome } from '../../store/actions';
 import { authenticationSelectors } from '../../../authentication/store/selectors/authentication.selectors';
 import { first, map } from 'rxjs/operators';
 import { financesSelectors } from '../../store/selectors/finances.selectors';
@@ -97,6 +97,12 @@ export class DataComponent implements OnInit, OnDestroy {
   }
 
   private removeExpense(id: string) {
+    this.store.select(authenticationSelectors.token)
+      .pipe(first())
+      .subscribe((token: string) => {
+        this.store.dispatch(new RemoveExpense(id, token));
+      });
+
     // this.subscription.add(
     // this.expenseService.removeExpense(id, this.token.getToken())
     //   .subscribe(
