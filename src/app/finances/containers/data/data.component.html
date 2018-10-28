@@ -1,8 +1,8 @@
 <div class="center-container">
-  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <div class="medium-bottom-margin table-container" *ngIf="combinedFinances | async">
+    <mat-spinner *ngIf="isLoading | async"></mat-spinner>
 
-  <div class="medium-bottom-margin table-container" *ngIf="!isLoading">
-    <table mat-table [dataSource]="finances">
+    <table mat-table [dataSource]="combinedFinances">
 
       <ng-container matColumnDef="category">
         <th mat-header-cell *matHeaderCellDef> Category</th>

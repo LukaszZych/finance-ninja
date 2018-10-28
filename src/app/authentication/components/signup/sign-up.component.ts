@@ -29,7 +29,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.isLoading$ = this.store.select('authenticationFeature')
       .pipe(
         map((appState: AuthenticationState) => {
-          return appState.authenticationState.loading;
+          return appState.loading;
         })
       );
   }

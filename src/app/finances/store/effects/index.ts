@@ -1,0 +1,1 @@
+import { FinancesEffects } from './finances.effects';export const financesEffects: any[] = [  FinancesEffects];export * from './finances.effects';

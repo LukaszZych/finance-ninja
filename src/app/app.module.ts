@@ -4,33 +4,40 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { AppComponent } from './core/containers/app/app.component';
+import { AppComponent } from './app.component';
 import { FinancesModule } from './finances/finances.module';
 import { AuthenticationModule } from './authentication/authentication.module';
-import { appRoutes } from './core/routes/app.routes';
+import { appRoutes } from './app.routes';
 
-import { HomeComponent } from './core/components/home/home.component';
 import { SharedModule } from './shared/shared.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { StoreModule } from '@ngrx/store';
+import { MetaReducer, StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
+import { CoreModule } from './core/core.module';
+
+// chroni stan przed mutacją przy developmencie (np gdyby reducer został nieprawidłowo napisany)
+import { storeFreeze } from 'ngrx-store-freeze';
+
+export const metaReducers: MetaReducer<any>[] = !environment.production
+  ? [storeFreeze]
+  : [];
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
   ],
   imports: [
     BrowserModule,
+    CoreModule,
     BrowserAnimationsModule,
     FormsModule,
     RouterModule.forRoot(appRoutes),
     AuthenticationModule,
     FinancesModule,
     SharedModule,
-    StoreModule.forRoot({}),
+    StoreModule.forRoot({}, {metaReducers}),
     EffectsModule.forRoot([]),
     !environment.production ? StoreDevtoolsModule.instrument({maxAge: 10}) : [],
     environment.production ? ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production }) : []

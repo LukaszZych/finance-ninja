@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { LogIn } from '../../store/actions';
 import { AuthenticationState } from '../../store/reducers';
-import * as authActions from '../../store/actions/auth.actions';
-import { map } from 'rxjs/operators';
+import { authenticationSelectors } from '../../store/selectors/authentication.selectors';
 
 @Component({
   selector: 'lz-login',
@@ -24,13 +24,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.logInForm = this.initializeForm();
-
-    this.isLoading$ = this.store.select('authenticationFeature')
-      .pipe(
-        map((appState: AuthenticationState) => {
-          return appState.authenticationState.loading;
-        })
-      );
+    this.isLoading$ = this.store.select(authenticationSelectors.loading);
   }
 
   private initializeForm(): FormGroup {
@@ -45,7 +39,7 @@ export class LoginComponent implements OnInit {
   }
 
   public logIn() {
-    this.store.dispatch(new authActions.LogIn(
+    this.store.dispatch(new LogIn(
       {
         email: this.logInForm.get('email').value.trim(),
         password: this.logInForm.get('password').value

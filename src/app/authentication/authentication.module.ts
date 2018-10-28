@@ -7,12 +7,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { authenticationRoutes } from './routes/authentication.routes';
 import { SharedModule } from '../shared/shared.module';
 
-import * as fromComponents from './components/index';
-import * as fromServices from './services/index';
 import { StoreModule } from '@ngrx/store';
-import { authenticationReducers } from './store/reducers';
+import { authenticationReducer } from './store/reducers';
 import { EffectsModule } from '@ngrx/effects';
-import { authenticationEffects } from './store/effects';
+import { LoginComponent, SignUpComponent } from './components';
+import { AuthenticationService } from './services';
+import { AuthEffects } from './store/effects';
+
 
 @NgModule({
   imports: [
@@ -21,10 +22,10 @@ import { authenticationEffects } from './store/effects';
     HttpClientModule,
     ReactiveFormsModule,
     SharedModule,
-    StoreModule.forFeature('authenticationFeature', authenticationReducers),
-    EffectsModule.forFeature(authenticationEffects)
+    StoreModule.forFeature('authenticationFeature', authenticationReducer), // dołącza ten klocek stanu do roota w app.module
+    EffectsModule.forFeature([AuthEffects])
   ],
-  declarations: [...fromComponents.components],
-  providers: [...fromServices.services],
+  declarations: [LoginComponent, SignUpComponent ],
+  providers: [AuthenticationService],
 })
 export class AuthenticationModule { }
