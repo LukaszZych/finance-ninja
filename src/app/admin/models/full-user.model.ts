@@ -1,0 +1,1 @@
+import { User } from '../../authentication/models/user.model';export interface FullUser extends User{  password: string;  __v: number;}

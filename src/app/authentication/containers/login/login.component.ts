@@ -29,7 +29,6 @@ export class LoginComponent implements OnInit {
 
     this.store.select(authenticationSelectors.loading)
       .subscribe((v) => {
-        console.log('isLoading: ', v);
         this.test = v;
       });
   }

@@ -13,6 +13,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { LoginComponent, SignUpComponent } from './containers';
 import { AuthenticationService } from './services';
 import { AuthEffects } from './store/effects';
+import { TokenService } from './services/token.service';
 
 
 @NgModule({
@@ -26,6 +27,6 @@ import { AuthEffects } from './store/effects';
     EffectsModule.forFeature([AuthEffects])
   ],
   declarations: [LoginComponent, SignUpComponent ],
-  providers: [AuthenticationService],
+  providers: [AuthenticationService, TokenService]
 })
 export class AuthenticationModule { }
