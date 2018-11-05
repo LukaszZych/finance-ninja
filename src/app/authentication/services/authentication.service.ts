@@ -22,14 +22,14 @@ export class AuthenticationService {
       .pipe(catchError((error) => throwError(error)));
   }
 
-  public createUser(credentials: Credentials): Observable<string> {
+  public createUser(credentials: Credentials): Observable<{token: string}> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
     };
 
-    return this.http.post<string>(`${environment.serverUrl}/api/users`, credentials, httpOptions)
+    return this.http.post<{token: string}>(`${environment.serverUrl}/api/users`, credentials, httpOptions)
       .pipe(catchError((error) => throwError(error)));
   }
 }

@@ -102,18 +102,5 @@ export class DataComponent implements OnInit, OnDestroy {
       .subscribe((token: string) => {
         this.store.dispatch(new RemoveExpense(id, token));
       });
-
-    // this.subscription.add(
-    // this.expenseService.removeExpense(id, this.token.getToken())
-    //   .subscribe(
-    //     () => {
-    //       this.finances = this.finances.filter((expense) => {
-    //         return expense._id !== id;
-    //       });
-    //     },
-    //     (error) => {
-    //       console.log('error: ', error);
-    //     })
-    // );
   }
 }

@@ -2,7 +2,7 @@
   <div class="lz-row">
     <div class="lz-col-12 center-container">
 
-      <lz-form-card *ngIf="!(isLoading$ | async) as loading">
+      <lz-form-card *ngIf="!(isLoading | async)">
         <div class="logo"></div>
 
         <form [formGroup]="logInForm" (ngSubmit)="logIn()">
@@ -25,7 +25,7 @@
         </form>
       </lz-form-card>
 
-      <mat-spinner *ngIf="isLoading$ | async"></mat-spinner>
+      <mat-spinner *ngIf="isLoading | async"></mat-spinner>
 
     </div>
   </div>

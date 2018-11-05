@@ -14,7 +14,8 @@ import { authenticationSelectors } from '../../store/selectors/authentication.se
 })
 export class LoginComponent implements OnInit {
 
-  public isLoading$: Observable<boolean>;
+  public isLoading: Observable<boolean>;
+  public test = false;
   public logInForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
@@ -24,7 +25,13 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.logInForm = this.initializeForm();
-    this.isLoading$ = this.store.select(authenticationSelectors.loading);
+    this.isLoading = this.store.select(authenticationSelectors.loading);
+
+    this.store.select(authenticationSelectors.loading)
+      .subscribe((v) => {
+        console.log('isLoading: ', v);
+        this.test = v;
+      });
   }
 
   private initializeForm(): FormGroup {

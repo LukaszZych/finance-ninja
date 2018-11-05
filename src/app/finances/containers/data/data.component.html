@@ -1,5 +1,5 @@
 <div class="center-container">
-  <div class="medium-bottom-margin table-container" *ngIf="combinedFinances | async">
+  <div class="medium-bottom-margin table-container" *ngIf="(combinedFinances | async) as finances">
     <div class="spinner-container" *ngIf="isLoading | async">
       <mat-spinner [diameter]="40"></mat-spinner>
     </div>
@@ -38,5 +38,8 @@
       <tr mat-header-row *matHeaderRowDef="expensesDisplayedColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: expensesDisplayedColumns;"></tr>
     </table>
+    <div class="center-container" *ngIf="!finances.length">
+      <p class="center-text">History is empty, please add a new income/expense.</p>
+    </div>
   </div>
 </div>

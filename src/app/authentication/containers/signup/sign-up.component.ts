@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { AuthenticationService } from '../../services';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { AuthenticationState } from '../../store/reducers';
 import * as authActions from '../../store/actions/auth.actions';
-import { map } from 'rxjs/operators';
+import { authenticationSelectors } from '../../store/selectors/authentication.selectors';
 
 @Component({
   selector: 'lz-sign-up',
@@ -14,23 +13,16 @@ import { map } from 'rxjs/operators';
 })
 export class SignUpComponent implements OnInit {
 
-  public isLoading$: Observable<boolean>;
+  public isLoading: Observable<boolean>;
   public registerForm: FormGroup;
 
-  constructor(private authService: AuthenticationService,
-              private formBuilder: FormBuilder,
+  constructor(private formBuilder: FormBuilder,
               private store: Store<AuthenticationState>) {
   }
 
   ngOnInit() {
     this.registerForm = this.initializeForm();
-
-    this.isLoading$ = this.store.select('authenticationFeature')
-      .pipe(
-        map((appState: AuthenticationState) => {
-          return appState.loading;
-        })
-      );
+    this.isLoading = this.store.pipe(select(authenticationSelectors.loading));
   }
 
   private initializeForm(): FormGroup {
