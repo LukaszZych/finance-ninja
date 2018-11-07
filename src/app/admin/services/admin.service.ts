@@ -10,7 +10,7 @@ export class AdminService {
 
   constructor(private http: HttpClient) { }
 
-  public getAllUsers(token: string): Observable<FullUser> {
+  public getAllUsers(token: string): Observable<FullUser[]> {
     const httpOptions: object = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -18,7 +18,7 @@ export class AdminService {
       })
     };
 
-    return this.http.get<FullUser>(`${environment.serverUrl}/api/users`, httpOptions)
+    return this.http.get<FullUser[]>(`${environment.serverUrl}/api/users`, httpOptions)
       .pipe(catchError((error) => throwError(error)));
   }
 }

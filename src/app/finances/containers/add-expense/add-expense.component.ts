@@ -48,4 +48,8 @@ export class AddExpenseComponent implements OnInit {
         this.store.dispatch(new AddExpense(newExpense, currentToken));
       });
   }
+
+  public log() {
+    console.log(this.expenseForm);
+  }
 }

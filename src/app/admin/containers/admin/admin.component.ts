@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminService } from '../../services/admin.service';
-import { select, Store } from '@ngrx/store';
-import * as fromStore from '../../../authentication/store';
+import { Store } from '@ngrx/store';
 import { authenticationSelectors } from '../../../authentication/store/selectors/authentication.selectors';
-import { switchMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
+import { FinancesState } from '../../../finances/store/reducers';
+import { GetUsers } from '../../store/actions';
 
 @Component({
   selector: 'lz-admin',
@@ -13,19 +12,20 @@ import { Observable } from 'rxjs';
 })
 export class AdminComponent implements OnInit {
 
-  public test: Observable<any>;
+  tmp = [];
 
-  constructor(private adminService: AdminService,
-              private store: Store<fromStore.AuthenticationState>) { }
+  constructor(private store: Store<FinancesState>) { }
 
   ngOnInit() {
-    this.test = this.store
-      .pipe(
-        select(authenticationSelectors.token),
-        switchMap((token: string) => {
-          return this.adminService.getAllUsers(token);
-        })
-      );
+    this.store.select('adminFeature').subscribe((state) => {
+      console.log(state);
+      this.tmp = state.users;
+    });
+
+    this.store.select(authenticationSelectors.token).pipe(first())
+      .subscribe((token: string) => {
+        this.store.dispatch(new GetUsers(token));
+      });
   }
 
 }
