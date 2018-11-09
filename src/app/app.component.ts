@@ -3,9 +3,10 @@ import * as authActions from './authentication/store/actions/auth.actions';
 import { Store } from '@ngrx/store';
 import * as fromStore from './authentication/store/index';
 import { map } from 'rxjs/operators';
-import { authenticationSelectors } from './authentication/store/selectors/authentication.selectors';
+import { authenticationSelectors } from './authentication/store/selectors';
 import { TokenService } from './authentication/services/token.service';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'lz-root',

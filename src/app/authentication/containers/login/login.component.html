@@ -3,8 +3,7 @@
     <div class="lz-col-12 center-container">
 
       <lz-form-card *ngIf="!(isLoading | async)">
-        <div class="logo"></div>
-
+        <h2>Log In</h2>
         <form [formGroup]="logInForm" (ngSubmit)="logIn()">
           <mat-form-field class="full-width">
             <mat-icon matPrefix>email</mat-icon>

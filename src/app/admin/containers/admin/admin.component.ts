@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { authenticationSelectors } from '../../../authentication/store/selectors/authentication.selectors';
-import { first } from 'rxjs/operators';
-import { FinancesState } from '../../../finances/store/reducers';
-import { GetUsers } from '../../store/actions';
+import { select, Store } from '@ngrx/store';
+import { authenticationSelectors } from '../../../authentication/store/selectors';
+import { first, startWith, tap } from 'rxjs/operators';
+import { GetUsers, RemoveUser } from '../../store/actions';
+import { adminSelectors } from '../../store/selectors';
+import { AdminState } from '../../store/reducers';
+import { FullUser } from '../../models/full-user.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'lz-admin',
@@ -12,20 +15,35 @@ import { GetUsers } from '../../store/actions';
 })
 export class AdminComponent implements OnInit {
 
-  tmp = [];
+  public users: Observable<FullUser[]>;
 
-  constructor(private store: Store<FinancesState>) { }
+  constructor(private store: Store<AdminState>) {
+  }
 
   ngOnInit() {
-    this.store.select('adminFeature').subscribe((state) => {
-      console.log(state);
-      this.tmp = state.users;
-    });
+    this.users = this.store
+      .pipe(
+        select(adminSelectors.users)
+      );
 
-    this.store.select(authenticationSelectors.token).pipe(first())
+    this.store
+      .pipe(
+        first(),
+        select(authenticationSelectors.token)
+      )
       .subscribe((token: string) => {
         this.store.dispatch(new GetUsers(token));
       });
   }
 
+  public onRemoveAccount(id: string) {
+    this.store
+      .pipe(
+        first(),
+        select(authenticationSelectors.token)
+      )
+      .subscribe((token: string) => {
+        this.store.dispatch(new RemoveUser({id: id, token: token}));
+      });
+  }
 }

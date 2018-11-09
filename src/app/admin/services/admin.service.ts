@@ -21,4 +21,16 @@ export class AdminService {
     return this.http.get<FullUser[]>(`${environment.serverUrl}/api/users`, httpOptions)
       .pipe(catchError((error) => throwError(error)));
   }
+
+  public removeUser(token: string, userId: string): Observable<FullUser> {
+    const httpOptions: object = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'x-auth-token': token
+      })
+    };
+
+    return this.http.delete<FullUser>(`${environment.serverUrl}/api/users/${userId}`, httpOptions)
+      .pipe(catchError((error) => throwError(error)));
+  }
 }

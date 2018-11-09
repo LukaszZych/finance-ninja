@@ -1,0 +1,16 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-icon mat-card-avatar>{{ account.isAdmin ? 'supervised_user_circle' : 'account_circle' }}</mat-icon>
+    <mat-card-title>{{account.email}}</mat-card-title>
+    <mat-card-subtitle>{{ account.isAdmin ? 'Admin' : 'User' }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="content">
+      <p>Expenses: {{account.expenses.length}}</p>
+      <p>Incomes: {{account.incomes.length}}</p>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-flat-button color="accent" (click)="removeUser(account._id)">REMOVE</button>
+  </mat-card-actions>
+</mat-card>

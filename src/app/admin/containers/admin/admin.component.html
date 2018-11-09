@@ -1,3 +1,9 @@
-<ng-container *ngFor="let user of tmp">
-  <p>{{ user.email }}</p>
-</ng-container>
+<div class="lz-container">
+  <div class="lz-row">
+    <div class="lz-col-12 user-container">
+      <ng-container *ngFor="let user of (users | async)">
+        <lz-user [account]="user" (removeAccount)="onRemoveAccount($event)"></lz-user>
+      </ng-container>
+    </div>
+  </div>
+</div>

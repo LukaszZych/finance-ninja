@@ -8,7 +8,8 @@ import { AdminService } from './services/admin.service';
 import { StoreModule } from '@ngrx/store';
 import { adminReducer } from './store/reducers';
 import { EffectsModule } from '@ngrx/effects';
-import { AdminEffects } from './store/effects/admin.effects';
+import { AdminEffects } from './store/effects';
+import { UserComponent } from './components/user/user.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,7 @@ import { AdminEffects } from './store/effects/admin.effects';
     StoreModule.forFeature('adminFeature', adminReducer), // dołącza ten klocek stanu do roota w app.module
     EffectsModule.forFeature([AdminEffects]),
   ],
-  declarations: [AdminComponent],
+  declarations: [AdminComponent, UserComponent],
   providers: [AdminService]
 })
 export class AdminModule { }
