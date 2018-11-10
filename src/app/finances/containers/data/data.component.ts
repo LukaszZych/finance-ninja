@@ -8,6 +8,8 @@ import { authenticationSelectors } from '../../../authentication/store/selectors
 import { first, map } from 'rxjs/operators';
 import { financesSelectors } from '../../store/selectors/finances.selectors';
 import { VisualizeFinance } from '../../models/visualize-finance.model';
+import { Expense } from '../../models/expense.model';
+import { FullUser } from '../../../admin/models/full-user.model';
 
 @Component({
   selector: 'lz-data',
@@ -19,6 +21,7 @@ export class DataComponent implements OnInit, OnDestroy {
   public expensesDisplayedColumns: string[] = ['category', 'date', 'value', 'description', 'delete'];
   public isLoading: Observable<boolean>;
   public combinedFinances: Observable<VisualizeFinance[]>;
+  public dupa: any[];
 
   private subscription = new Subscription();
 
@@ -33,24 +36,24 @@ export class DataComponent implements OnInit, OnDestroy {
         this.store.dispatch(new LoadUser(token));
       });
 
-    const expenses = this.store.pipe(select(financesSelectors.userExpenses));
-
-    const incomes = this.store
+    this.store
       .pipe(
-        select(financesSelectors.userIncomes),
-        map((finances: Array<Income>): VisualizeFinance[] => {
-          return finances.map((finance) => {
-            return { ...finance, category: 'income' };
-          });
+        select(financesSelectors.userExpenses),
+        map((expenses: Expense[]) => {
+          return expenses.reduce((previousValue, currentValue) => {
+            const date = new Date(currentValue.date).toLocaleDateString();
+            const index = previousValue.findIndex((day) => day.date === date);
+            index === -1 ?
+              previousValue.push({ date: date, finances: [currentValue] })
+              : previousValue[index].finances.push(currentValue);
+            return previousValue;
+          }, []);
         })
-      );
+      ).subscribe((v) => {
+      this.dupa = v;
+    });
 
-    this.combinedFinances = combineLatest(expenses, incomes)
-      .pipe(
-        map((arrays: Array<Array<any>>): VisualizeFinance[] => {
-          return [...arrays[0], ...arrays[1]].reverse();
-        }),
-      );
+
   }
 
   ngOnDestroy() {
