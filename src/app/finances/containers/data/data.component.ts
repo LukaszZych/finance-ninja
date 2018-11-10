@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Income } from '../../models/income.model';
 import { combineLatest, Observable, Subscription } from 'rxjs';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { FinancesState } from '../../store/reducers';
 import { LoadUser, RemoveExpense, RemoveIncome } from '../../store/actions';
 import { authenticationSelectors } from '../../../authentication/store/selectors/authentication.selectors';
@@ -26,17 +26,18 @@ export class DataComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.isLoading = this.store.select(financesSelectors.isLoading);
+    this.isLoading = this.store.pipe(select(financesSelectors.isLoading));
 
-    this.store.select(authenticationSelectors.token).pipe(first())
+    this.store.pipe(first(), select(authenticationSelectors.token))
       .subscribe((token: string) => {
         this.store.dispatch(new LoadUser(token));
       });
 
-    const expenses = this.store.select(financesSelectors.userExpenses);
+    const expenses = this.store.pipe(select(financesSelectors.userExpenses));
 
-    const incomes = this.store.select(financesSelectors.userIncomes)
+    const incomes = this.store
       .pipe(
+        select(financesSelectors.userIncomes),
         map((finances: Array<Income>): VisualizeFinance[] => {
           return finances.map((finance) => {
             return { ...finance, category: 'income' };

@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as authActions from './authentication/store/actions/auth.actions';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import * as fromStore from './authentication/store/index';
 import { map } from 'rxjs/operators';
 import { authenticationSelectors } from './authentication/store/selectors';
 import { TokenService } from './authentication/services/token.service';
 import { Subscription } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'lz-root',
@@ -17,6 +17,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public isAuthenticated = false;
   public isAdmin = false;
+  public header = 'Finance Ninja';
 
   private subscription: Subscription = new Subscription();
 
@@ -28,8 +29,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.logWithTheToken();
 
     this.subscription.add(
-      this.store.select(authenticationSelectors.token)
+      this.store
         .pipe(
+          select(authenticationSelectors.token),
           map((token: string): boolean => {
             return !!token;
           })
@@ -38,7 +40,8 @@ export class AppComponent implements OnInit, OnDestroy {
     );
 
     this.subscription.add(
-      this.store.select(authenticationSelectors.isAdmin)
+      this.store
+        .pipe(select(authenticationSelectors.isAdmin))
         .subscribe((isAdmin: boolean) => this.isAdmin = isAdmin)
     );
   }

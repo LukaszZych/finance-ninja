@@ -19,7 +19,6 @@ export class TokenService {
     try {
       if (!!token) {
         this.decodedToken = this.jwt.decodeToken(token);
-        console.log('decoded: ', this.decodedToken);
         return this.decodedToken;
       }
     } catch (e) {
