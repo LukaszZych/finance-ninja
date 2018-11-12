@@ -5,7 +5,7 @@ import { combineLatest, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { FinancesState } from '../../store/reducers';
 import { AddIncome } from '../../store/actions';
-import { authenticationSelectors } from '../../../authentication/store/selectors/authentication.selectors';
+import { authenticationSelectors } from '../../../authentication/store';
 import { first } from 'rxjs/operators';
 
 @Component({
@@ -15,8 +15,7 @@ import { first } from 'rxjs/operators';
 })
 export class AddIncomeComponent implements OnInit {
 
-  @ViewChild('form') form;
-
+  @ViewChild('income') incomeFormView;
   public incomeForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
@@ -41,6 +40,7 @@ export class AddIncomeComponent implements OnInit {
       .pipe(first())
       .subscribe(([newIncome, currentToken]: [Income, string]) => {
         this.store.dispatch(new AddIncome(newIncome, currentToken));
+        this.incomeFormView.resetForm();
       });
   }
 }

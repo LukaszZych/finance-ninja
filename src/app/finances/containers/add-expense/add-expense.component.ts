@@ -2,12 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Category } from '../../models/category.model';
 import { combineLatest, of } from 'rxjs';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { FinancesState } from '../../store/reducers';
-import { authenticationSelectors } from '../../../authentication/store/selectors/authentication.selectors';
+import { authenticationSelectors } from '../../../authentication/store';
 import { first } from 'rxjs/operators';
-import { Income } from '../../models/income.model';
-import { AddExpense, AddIncome } from '../../store/actions';
+import { AddExpense } from '../../store/actions';
 import { Expense } from '../../models/expense.model';
 
 @Component({
@@ -17,7 +16,7 @@ import { Expense } from '../../models/expense.model';
 })
 export class AddExpenseComponent implements OnInit {
 
-  @ViewChild('form') form;
+  @ViewChild('expense') expenseFormView;
   public expenseForm: FormGroup;
   public categories: Category[] = [
     'food', 'home', 'car', 'entertainment', 'clothes', 'firm', 'education'
@@ -32,24 +31,21 @@ export class AddExpenseComponent implements OnInit {
 
   private initializeForm(): FormGroup {
     return this.formBuilder.group({
-      value: ['', [Validators.required]],
-      category: ['', [Validators.required]],
-      description: ['']
+      value: [null, [Validators.required]],
+      category: [null, [Validators.required]],
+      description: [null]
     });
   }
 
   public addExpense() {
     const expense = of(this.expenseForm.getRawValue());
-    const token = this.store.select(authenticationSelectors.token);
+    const token = this.store.pipe(select(authenticationSelectors.token));
 
     combineLatest(expense, token)
       .pipe(first())
       .subscribe(([newExpense, currentToken]: [Expense, string]) => {
         this.store.dispatch(new AddExpense(newExpense, currentToken));
+        this.expenseFormView.resetForm();
       });
-  }
-
-  public log() {
-    console.log(this.expenseForm);
   }
 }

@@ -2,35 +2,35 @@
   <div class="lz-row">
     <div class="lz-col-12">
 
-      <mat-card style="margin-bottom: 16px;" *ngFor="let day of dupa.slice().reverse()">
+      <mat-card class="day" *ngFor="let day of combinedFinances">
         <mat-card-header>
-          <mat-icon class="main-icon" mat-card-avatar>date_range</mat-icon>
+          <mat-icon class="main-icon" mat-card-avatar>event_note</mat-icon>
           <mat-card-title>{{day.date}}</mat-card-title>
-          <mat-card-subtitle>-100 zł</mat-card-subtitle>
+          <mat-card-subtitle>{{day.dayResult}} zł</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content >
-          <div style="display: flex; flex-direction: row; justify-content: space-between;" *ngFor="let value of day.finances">
-            <button mat-mini-fab color="primary">
-              <mat-icon>shopping_cart</mat-icon>
-            </button>
-            <p>-{{value.value}}</p>
-            <p>{{value.description}}</p>
-            <button mat-mini-fab>
-              <mat-icon aria-label="Remove icon">clear</mat-icon>
-            </button>
+          <div class="value" *ngFor="let value of day.finances">
+              <button class="value__type" mat-mini-fab disabled>
+                <mat-icon>{{ financeIcon(value.category) }}</mat-icon>
+              </button>
+              <p class="value__amount">{{ valueSign(value.category) }}{{value.value}} zł</p>
+
+              <p class="value__description">{{value.description}}</p>
+              <button mat-mini-fab>
+                <mat-icon aria-label="Remove icon" (click)="removeFinance(value._id, value.category)">clear</mat-icon>
+              </button>
           </div>
         </mat-card-content>
       </mat-card>
+
+      <div class="center-container" *ngIf="!combinedFinances.length && !isLoading">
+        <p class="center-text">History is empty, please add a new income/expense.</p>
+      </div>
 
     </div>
   </div>
 </div>
 
-
-<!--<div class="spinner-container" *ngIf="isLoading | async">-->
-  <!--<mat-spinner [diameter]="40"></mat-spinner>-->
-<!--</div>-->
-
-<!--<div class="center-container" *ngIf="!finances.length">-->
-  <!--<p class="center-text">History is empty, please add a new income/expense.</p>-->
-<!--</div>-->
+<div class="spinner-container" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>

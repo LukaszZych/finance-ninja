@@ -3,7 +3,7 @@
     <div class="lz-col-12 center-container">
 
       <lz-form-card>
-        <form [formGroup]="expenseForm" #form="ngForm" (ngSubmit)="addExpense()">
+        <form [formGroup]="expenseForm" #expense="ngForm" (ngSubmit)="addExpense()">
           <mat-form-field class="full-width">
             <mat-icon matPrefix>attach_money</mat-icon>
             <input matInput placeholder="Value" formControlName="value" type="number">
@@ -30,8 +30,6 @@
             <button mat-flat-button color="primary" [disabled]="!expenseForm.valid" type="submit">Add</button>
           </div>
         </form>
-
-        <button (click)="log()">Log</button>
       </lz-form-card>
 
     </div>
