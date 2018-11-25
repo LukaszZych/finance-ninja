@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Income } from '../../models/income.model';
-import { combineLatest, Observable, Subscription } from 'rxjs';
+import { combineLatest, Subscription } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { FinancesState } from '../../store/reducers';
 import { LoadUser, RemoveExpense, RemoveIncome } from '../../store/actions';
@@ -8,8 +8,6 @@ import { authenticationSelectors } from '../../../authentication/store/selectors
 import { first, map } from 'rxjs/operators';
 import { financesSelectors } from '../../store/selectors/finances.selectors';
 import { VisualizeFinance } from '../../models/visualize-finance.model';
-import { Expense } from '../../models/expense.model';
-import { FullUser } from '../../../admin/models/full-user.model';
 
 @Component({
   selector: 'lz-data',
