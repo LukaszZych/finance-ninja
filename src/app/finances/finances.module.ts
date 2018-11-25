@@ -5,7 +5,7 @@ import { AddExpenseComponent } from './containers/add-expense/add-expense.compon
 import { AddIncomeComponent } from './containers/add-income/add-income.component';
 import { RouterModule } from '@angular/router';
 import { financeRoutes } from './routes/finance.routes';
-import { DataComponent } from './containers/data/data.component';
+import { HistoryComponent } from './containers/history/history.component';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -29,7 +29,7 @@ import { financesReducer } from './store/reducers';
   declarations: [
     AddExpenseComponent,
     AddIncomeComponent,
-    DataComponent
+    HistoryComponent
   ],
   providers: [
     ExpenseService,

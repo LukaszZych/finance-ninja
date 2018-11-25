@@ -13,10 +13,10 @@ import { FullUser } from '../../../admin/models/full-user.model';
 
 @Component({
   selector: 'lz-data',
-  templateUrl: './data.component.html',
-  styleUrls: ['./data.component.scss']
+  templateUrl: './history.component.html',
+  styleUrls: ['./history.component.scss']
 })
-export class DataComponent implements OnInit, OnDestroy {
+export class HistoryComponent implements OnInit, OnDestroy {
 
   public isLoading: boolean;
   public combinedFinances;
