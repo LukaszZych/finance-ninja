@@ -1,0 +1,1 @@
+import { Routes } from '@angular/router';import { ChartComponent } from '../containers/chart/chart.component';export const statisticsRoutes: Routes = [  { path: 'statistics', component: ChartComponent },];
