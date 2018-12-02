@@ -2,6 +2,10 @@
   <div class="lz-row">
     <div class="lz-col-12">
 
+      <div class="spinner-container" *ngIf="isLoading">
+        <mat-spinner></mat-spinner>
+      </div>
+
       <mat-card class="day" *ngFor="let day of combinedFinances">
         <mat-card-header>
           <mat-icon class="main-icon" mat-card-avatar>event_note</mat-icon>
@@ -29,8 +33,4 @@
 
     </div>
   </div>
-</div>
-
-<div class="spinner-container" *ngIf="isLoading">
-  <mat-spinner></mat-spinner>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { authenticationSelectors } from '../../../authentication/store/selectors';
 import { first, startWith, tap } from 'rxjs/operators';
@@ -6,16 +6,19 @@ import { GetUsers, RemoveUser } from '../../store/actions';
 import { adminSelectors } from '../../store/selectors';
 import { AdminState } from '../../store/reducers';
 import { FullUser } from '../../models/full-user.model';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { financesSelectors } from '../../../finances/store/selectors/finances.selectors';
 
 @Component({
   selector: 'lz-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent implements OnInit, OnDestroy {
 
   public users: Observable<FullUser[]>;
+  public isLoading = false;
+  private subscription = new Subscription();
 
   constructor(private store: Store<AdminState>) {
   }
@@ -26,6 +29,7 @@ export class AdminComponent implements OnInit {
         select(adminSelectors.users)
       );
 
+    this.subscription.add(
     this.store
       .pipe(
         first(),
@@ -33,7 +37,20 @@ export class AdminComponent implements OnInit {
       )
       .subscribe((token: string) => {
         this.store.dispatch(new GetUsers(token));
-      });
+      })
+    );
+
+    this.subscription.add(
+      this.store
+        .pipe(
+          select(adminSelectors.loading)
+        )
+        .subscribe((v: boolean) => this.isLoading = v)
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   public onRemoveAccount(id: string) {

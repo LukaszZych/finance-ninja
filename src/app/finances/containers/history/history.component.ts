@@ -18,7 +18,6 @@ export class HistoryComponent implements OnInit, OnDestroy {
 
   public isLoading: boolean;
   public combinedFinances;
-
   private subscription = new Subscription();
 
   constructor(private store: Store<FinancesState>) {
