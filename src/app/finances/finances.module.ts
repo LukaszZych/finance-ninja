@@ -23,7 +23,7 @@ import { financesReducer } from './store/reducers';
     SharedModule,
     ReactiveFormsModule,
     RouterModule.forChild(financeRoutes),
-    StoreModule.forFeature('financesFeature', financesReducer), // dołącza ten klocek stanu do roota w app.module
+    StoreModule.forFeature('financesFeature', financesReducer),
     EffectsModule.forFeature(financesEffects),
   ],
   declarations: [

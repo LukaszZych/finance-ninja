@@ -1,1 +1,1 @@
-import { Routes } from '@angular/router';import { ChartComponent } from '../containers/chart/chart.component';export const statisticsRoutes: Routes = [  { path: 'statistics', component: ChartComponent },];
+import { Routes } from '@angular/router';import { ChartComponent } from '../containers/chart/chart.component';import { AuthGuard } from '../../authentication/guards/auth.guard';export const statisticsRoutes: Routes = [  { path: 'statistics', component: ChartComponent, canActivate: [AuthGuard] },];

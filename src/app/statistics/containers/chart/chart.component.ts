@@ -24,6 +24,9 @@ export class ChartComponent implements OnInit, OnDestroy {
       backgroundColor: ['#3F51B5', '#673AB7', '#E91E63', '#FF9800', '#FFC107', '#4CAF50', '#009688'],
     }
   ];
+  public chartOptions: object = {
+    legend: {position: 'bottom'}
+  };
 
   private subscription = new Subscription();
 

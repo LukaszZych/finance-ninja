@@ -6,6 +6,7 @@ import { select, Store } from '@ngrx/store';
 import { LogIn } from '../../store/actions';
 import { AuthenticationState } from '../../store/reducers';
 import { authenticationSelectors } from '../../store/selectors/authentication.selectors';
+import { debounceTime, first } from 'rxjs/operators';
 
 @Component({
   selector: 'lz-login',
@@ -15,7 +16,6 @@ import { authenticationSelectors } from '../../store/selectors/authentication.se
 export class LoginComponent implements OnInit {
 
   public isLoading: Observable<boolean>;
-  public test = false;
   public logInForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
@@ -26,12 +26,6 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.logInForm = this.initializeForm();
     this.isLoading = this.store.pipe(select(authenticationSelectors.loading));
-
-    this.store
-      .pipe(select(authenticationSelectors.loading))
-      .subscribe((v) => {
-        this.test = v;
-      });
   }
 
   private initializeForm(): FormGroup {
@@ -46,6 +40,8 @@ export class LoginComponent implements OnInit {
   }
 
   public logIn() {
+    const email = this.logInForm.get('email').value;
+    this.logInForm.get('email').patchValue(email.trim());
     this.store.dispatch(new LogIn(this.logInForm.getRawValue()));
   }
 }

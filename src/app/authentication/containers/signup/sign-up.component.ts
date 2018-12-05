@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { AuthenticationState } from '../../store/reducers';
 import * as authActions from '../../store/actions/auth.actions';
-import { authenticationSelectors } from '../../store/selectors/authentication.selectors';
+import { authenticationSelectors } from '../../store/selectors';
 
 @Component({
   selector: 'lz-sign-up',

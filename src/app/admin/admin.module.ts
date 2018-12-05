@@ -16,7 +16,7 @@ import { UserComponent } from './components/user/user.component';
     CommonModule,
     RouterModule.forChild(adminRoutes),
     SharedModule,
-    StoreModule.forFeature('adminFeature', adminReducer), // dołącza ten klocek stanu do roota w app.module
+    StoreModule.forFeature('adminFeature', adminReducer),
     EffectsModule.forFeature([AdminEffects]),
   ],
   declarations: [AdminComponent, UserComponent],

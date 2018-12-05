@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Income } from '../../models/income.model';
 import { combineLatest, of } from 'rxjs';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { FinancesState } from '../../store/reducers';
 import { AddIncome } from '../../store/actions';
 import { authenticationSelectors } from '../../../authentication/store';
@@ -34,7 +34,7 @@ export class AddIncomeComponent implements OnInit {
 
   public addIncome() {
     const income = of(this.incomeForm.getRawValue());
-    const token = this.store.select(authenticationSelectors.token);
+    const token = this.store.pipe(select(authenticationSelectors.token));
 
     combineLatest(income, token)
       .pipe(first())
