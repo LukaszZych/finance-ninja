@@ -6,7 +6,6 @@ import { select, Store } from '@ngrx/store';
 import { LogIn } from '../../store/actions';
 import { AuthenticationState } from '../../store/reducers';
 import { authenticationSelectors } from '../../store/selectors/authentication.selectors';
-import { debounceTime, first } from 'rxjs/operators';
 
 @Component({
   selector: 'lz-login',
