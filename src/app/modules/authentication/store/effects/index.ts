@@ -1,1 +1,0 @@
-import { AuthEffects } from './auth.effects';export const authenticationEffects: any[] = [  AuthEffects];export * from './auth.effects';

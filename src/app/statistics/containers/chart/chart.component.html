@@ -1,0 +1,17 @@
+<div class="lz-container">
+  <div class="lz-row">
+    <div class="lz-col-12">
+      <ng-container *ngIf="chartData.length; else noData">
+        <h3>The sum of expenses:</h3>
+          <canvas baseChart
+                  [data]="chartData"
+                  [labels]="chartLabels"
+                  [chartType]="chartType"
+                  [colors]="chartColors"
+                  [options]="chartOptions">
+          </canvas>
+      </ng-container>
+      <ng-template #noData><p class="center-text">No data to display.</p></ng-template>
+    </div>
+  </div>
+</div>

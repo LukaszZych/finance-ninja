@@ -1,26 +1,61 @@
-import { Component, OnInit } from '@angular/core';
-import { UserService } from './modules/finances/services/user.service';
-import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
-import { TokenService } from './modules/shared/services/token.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import * as authActions from './authentication/store/actions/auth.actions';
+import { select, Store } from '@ngrx/store';
+import * as fromStore from './authentication/store/index';
+import { map } from 'rxjs/operators';
+import { authenticationSelectors } from './authentication/store/selectors';
+import { TokenService } from './authentication/services/token.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'lz-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  constructor(private router: Router,
-              public snackBar: MatSnackBar,
-              public token: TokenService) {
+export class AppComponent implements OnInit, OnDestroy {
+
+  public isAuthenticated = false;
+  public isAdmin = false;
+  public header = 'Finance Ninja';
+
+  private subscription: Subscription = new Subscription();
+
+  constructor(private store: Store<fromStore.AuthenticationState>,
+              private tokenService: TokenService) {
+  }
+
+  ngOnInit(): void {
+    this.logWithTheToken();
+
+    this.subscription.add(
+      this.store
+        .pipe(
+          select(authenticationSelectors.token),
+          map((token: string): boolean => {
+            return !!token;
+          })
+        )
+        .subscribe((token: boolean) => this.isAuthenticated = token)
+    );
+
+    this.subscription.add(
+      this.store
+        .pipe(select(authenticationSelectors.isAdmin))
+        .subscribe((isAdmin: boolean) => this.isAdmin = isAdmin)
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   public logOut() {
-    this.token.resetToken();
-    this.router.navigate(['./']);
-    this.snackBar.open(`Logout successful`, null, {
-      panelClass: 'force-center',
-      duration: 3000
-    });
+    this.store.dispatch(new authActions.LogOut());
+  }
+
+  private logWithTheToken(): void {
+    const token = localStorage.getItem('financeNinjaToken');
+    const decoded = this.tokenService.decodeToken(token);
+    if (!!decoded) this.store.dispatch(new authActions.LogInSuccess({token: token, isAdmin: decoded.isAdmin}));
   }
 }

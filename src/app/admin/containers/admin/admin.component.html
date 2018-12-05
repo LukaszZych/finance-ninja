@@ -1,0 +1,13 @@
+<div class="lz-container">
+  <div class="lz-row">
+    <div class="lz-col-12 user-container">
+      <div class="spinner-container" *ngIf="isLoading">
+        <mat-spinner></mat-spinner>
+      </div>
+
+      <ng-container *ngFor="let user of (users | async)">
+        <lz-user [account]="user" (removeAccount)="onRemoveAccount($event)"></lz-user>
+      </ng-container>
+    </div>
+  </div>
+</div>
