@@ -6,7 +6,6 @@ import { map } from 'rxjs/operators';
 import { authenticationSelectors } from './authentication/store/selectors';
 import { TokenService } from './authentication/services/token.service';
 import { Subscription } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'lz-root',

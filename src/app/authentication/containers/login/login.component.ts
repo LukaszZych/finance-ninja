@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { LogIn } from '../../store/actions';
 import { AuthenticationState } from '../../store/reducers';
 import { authenticationSelectors } from '../../store/selectors/authentication.selectors';
@@ -25,9 +25,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.logInForm = this.initializeForm();
-    this.isLoading = this.store.select(authenticationSelectors.loading);
+    this.isLoading = this.store.pipe(select(authenticationSelectors.loading));
 
-    this.store.select(authenticationSelectors.loading)
+    this.store
+      .pipe(select(authenticationSelectors.loading))
       .subscribe((v) => {
         this.test = v;
       });

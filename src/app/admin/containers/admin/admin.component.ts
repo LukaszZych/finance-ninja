@@ -1,13 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { authenticationSelectors } from '../../../authentication/store/selectors';
-import { first, startWith, tap } from 'rxjs/operators';
+import { first } from 'rxjs/operators';
 import { GetUsers, RemoveUser } from '../../store/actions';
 import { adminSelectors } from '../../store/selectors';
 import { AdminState } from '../../store/reducers';
 import { FullUser } from '../../models/full-user.model';
 import { Observable, Subscription } from 'rxjs';
-import { financesSelectors } from '../../../finances/store/selectors/finances.selectors';
 
 @Component({
   selector: 'lz-admin',

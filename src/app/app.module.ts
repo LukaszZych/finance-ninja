@@ -19,7 +19,6 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { CoreModule } from './core/core.module';
 import { AuthGuard } from './authentication/guards/auth.guard';
-
 // chroni stan przed mutacją przy developmencie (np gdyby reducer został nieprawidłowo napisany)
 import { storeFreeze } from 'ngrx-store-freeze';
 
