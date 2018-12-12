@@ -49,7 +49,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
       .pipe(
         select(financesSelectors.userIncomes),
         map((finances: Array<Income>): VisualizeFinance[] => {
-          return finances.map((finance) => {
+          return <any>finances.map((finance) => {
             return { ...finance, category: 'income' };
           });
         })
@@ -63,7 +63,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
           }),
           map((finances: any[]) => {
             return finances.reduce((previousValue, currentValue) => {
-              const date = new Date(currentValue.date).toLocaleDateString();
+              const date = new Date(currentValue.date).toDateString();
               const index = previousValue.findIndex((day) => day.date === date);
               index === -1 ?
                 previousValue.push({ date: date, finances: [currentValue] })
