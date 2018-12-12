@@ -31,9 +31,9 @@ export class AddExpenseComponent implements OnInit {
 
   private initializeForm(): FormGroup {
     return this.formBuilder.group({
-      value: [null, [Validators.required]],
+      value: [null, [Validators.required, Validators.min(0.01), Validators.max(9999999)]],
       category: [null, [Validators.required]],
-      description: [null]
+      description: [null, [Validators.maxLength(50)]]
     });
   }
 

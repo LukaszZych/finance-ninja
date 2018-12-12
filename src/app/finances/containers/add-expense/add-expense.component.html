@@ -6,25 +6,27 @@
         <form [formGroup]="expenseForm" #expense="ngForm" (ngSubmit)="addExpense()">
           <mat-form-field class="full-width">
             <mat-icon matPrefix>attach_money</mat-icon>
-            <input matInput placeholder="Value" formControlName="value" type="number">
-            <mat-hint>Required</mat-hint>
+            <input matInput placeholder="Value" formControlName="value" type="number" required>
+            <mat-hint>Value must be greater than 0</mat-hint>
             <mat-error *ngIf="expenseForm.get('value').invalid">Value is not valid.</mat-error>
           </mat-form-field>
 
           <mat-form-field class="full-width">
             <mat-icon matPrefix>pie_chart</mat-icon>
-            <mat-select placeholder="Category" formControlName="category">
+            <mat-select placeholder="Category" formControlName="category" required>
               <mat-option *ngFor="let category of categories" [value]="category">
                 {{category}}
               </mat-option>
             </mat-select>
-            <mat-hint>Required</mat-hint>
-            <mat-error *ngIf="expenseForm.get('category').invalid">Please choose a category.</mat-error>
+            <mat-hint>Please choose a category</mat-hint>
+            <mat-error *ngIf="expenseForm.get('category').invalid">Category can't be empty</mat-error>
           </mat-form-field>
 
           <mat-form-field class="full-width medium-bottom-margin">
             <mat-icon matPrefix>create</mat-icon>
-            <input matInput placeholder="Description" formControlName="description" type="text">
+            <input matInput placeholder="Description" formControlName="description" type="text" #description maxlength="50">
+            <mat-hint align="start">Max 50 characters</mat-hint>
+            <mat-hint align="end">{{description.value.length}} / 50</mat-hint>
             <mat-error *ngIf="expenseForm.get('description').invalid">Description is not valid.</mat-error>
           </mat-form-field>
 

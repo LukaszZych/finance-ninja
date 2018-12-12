@@ -6,16 +6,17 @@
         <form [formGroup]="incomeForm" #income="ngForm" (ngSubmit)="addIncome()">
           <mat-form-field class="full-width">
             <mat-icon matPrefix>attach_money</mat-icon>
-            <input matInput placeholder="Value" formControlName="value" type="number">
-            <mat-hint>Required</mat-hint>
+            <input matInput placeholder="Value" formControlName="value" type="number" min="0" required>
+            <mat-hint>Value must be greater than 0</mat-hint>
             <mat-error *ngIf="incomeForm.get('value').invalid">Value is not valid.</mat-error>
           </mat-form-field>
 
           <mat-form-field class="full-width medium-bottom-margin">
             <mat-icon matPrefix>create</mat-icon>
-            <input matInput placeholder="Description" formControlName="description" type="text">
-            <mat-hint>Required</mat-hint>
-            <mat-error *ngIf="incomeForm.get('description').invalid">Description is not valid.</mat-error>
+            <input matInput placeholder="Description" formControlName="description" #description maxlength="50" type="text">
+            <mat-hint align="start">Max 50 characters</mat-hint>
+            <mat-hint align="end">{{description.value.length}} / 50</mat-hint>
+            <mat-error *ngIf="incomeForm.get('description').invalid">Description is not valid</mat-error>
           </mat-form-field>
 
           <div class="buttons">

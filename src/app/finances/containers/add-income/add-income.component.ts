@@ -27,8 +27,8 @@ export class AddIncomeComponent implements OnInit {
 
   private initializeForm(): FormGroup {
     return this.formBuilder.group({
-      value: ['', [Validators.required]],
-      description: ['', [Validators.required]]
+      value: ['', [Validators.required, Validators.min(0.01), Validators.max(9999999)]],
+      description: ['', [Validators.maxLength(50)]]
     });
   }
 
