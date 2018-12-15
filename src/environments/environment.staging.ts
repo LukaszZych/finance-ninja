@@ -1,1 +1,1 @@
-export const environment = {  production: false,  serverUrl: 'https://radiant-brushlands-27740.herokuapp.com'};
+export const environment = {  production: false,  serverUrl: 'https://finance-ninja-serv.herokuapp.com'};
