@@ -2,10 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as authActions from './authentication/store/actions/auth.actions';
 import { select, Store } from '@ngrx/store';
 import * as fromStore from './authentication/store/index';
-import { map } from 'rxjs/operators';
+import { filter, map, startWith, tap } from 'rxjs/operators';
 import { authenticationSelectors } from './authentication/store/selectors';
 import { TokenService } from './authentication/services/token.service';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute, ResolveStart, Router } from '@angular/router';
 
 @Component({
   selector: 'lz-root',
@@ -16,12 +17,13 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public isAuthenticated = false;
   public isAdmin = false;
-  public header = 'Finance Ninja';
+  public header: string;
 
   private subscription: Subscription = new Subscription();
 
   constructor(private store: Store<fromStore.AuthenticationState>,
-              private tokenService: TokenService) {
+              private tokenService: TokenService,
+              private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -43,6 +45,22 @@ export class AppComponent implements OnInit, OnDestroy {
         .pipe(select(authenticationSelectors.isAdmin))
         .subscribe((isAdmin: boolean) => this.isAdmin = isAdmin)
     );
+
+    this.subscription.add(
+      this.router.events
+        .pipe(
+          startWith({}),
+          filter(event => event instanceof ResolveStart),
+          map((event) => event.state.root.firstChild.data)
+        )
+        .subscribe((routeData) => {
+          if (routeData.name) {
+            this.header = routeData.name;
+          } else {
+            this.header = 'Finance Ninja';
+          }
+        })
+    );
   }
 
   ngOnDestroy(): void {
@@ -56,6 +74,6 @@ export class AppComponent implements OnInit, OnDestroy {
   private logWithTheToken(): void {
     const token = localStorage.getItem('financeNinjaToken');
     const decoded = this.tokenService.decodeToken(token);
-    if (!!decoded) this.store.dispatch(new authActions.LogInSuccess({token: token, isAdmin: decoded.isAdmin}));
+    if (!!decoded) this.store.dispatch(new authActions.LogInSuccess({ token: token, isAdmin: decoded.isAdmin }));
   }
 }
