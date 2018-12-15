@@ -49,8 +49,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.router.events
         .pipe(
-          startWith({}),
-          filter(event => event instanceof ResolveStart),
+          filter((event: ResolveStart) => event instanceof ResolveStart),
           map((event) => event.state.root.firstChild.data)
         )
         .subscribe((routeData) => {
