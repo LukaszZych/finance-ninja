@@ -1,1 +1,1 @@
-.main-header {  display: inline-block;}
+mat-toolbar-row {  display: flex;  justify-content: space-between;  position: relative;  .main-menu {    display: inline-flex;    align-items: center;    span {      display: inline-block;    }  }  .logo {    height: 36px; display: inline-block; width: 36px; position: absolute; left: 50%; transform: translateX(-50%);  }}a {  text-decoration: none;}

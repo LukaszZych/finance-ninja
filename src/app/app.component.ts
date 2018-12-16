@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as authActions from './authentication/store/actions/auth.actions';
 import { select, Store } from '@ngrx/store';
 import * as fromStore from './authentication/store/index';
-import { filter, map, startWith, tap } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { authenticationSelectors } from './authentication/store/selectors';
 import { TokenService } from './authentication/services/token.service';
 import { Subscription } from 'rxjs';
@@ -56,7 +56,7 @@ export class AppComponent implements OnInit, OnDestroy {
           if (routeData.name) {
             this.header = routeData.name;
           } else {
-            this.header = 'Finance Ninja';
+            this.header = '';
           }
         })
     );
