@@ -20,10 +20,18 @@ import { EffectsModule } from '@ngrx/effects';
 import { CoreModule } from './core/core.module';
 import { AuthGuard } from './authentication/guards/auth.guard';
 import { storeFreeze } from 'ngrx-store-freeze';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 export const metaReducers: MetaReducer<any>[] = !environment.production
   ? [storeFreeze]
   : [];
+
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(httpClient: HttpClient) {
+  return new TranslateHttpLoader(httpClient);
+}
 
 @NgModule({
   declarations: [
@@ -42,6 +50,13 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     SharedModule,
     StoreModule.forRoot({}, {metaReducers}),
     EffectsModule.forRoot([]),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
     !environment.production ? StoreDevtoolsModule.instrument({maxAge: 10}) : [],
     environment.production ? ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production }) : []
   ],

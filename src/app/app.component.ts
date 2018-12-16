@@ -7,6 +7,7 @@ import { authenticationSelectors } from './authentication/store/selectors';
 import { TokenService } from './authentication/services/token.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, ResolveStart, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'lz-root',
@@ -21,9 +22,15 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription = new Subscription();
 
-  constructor(private store: Store<fromStore.AuthenticationState>,
+  constructor(public translate: TranslateService,
+              private store: Store<fromStore.AuthenticationState>,
               private tokenService: TokenService,
               private route: ActivatedRoute, private router: Router) {
+    translate.addLangs(['en', 'pl']);
+    translate.setDefaultLang('pl');
+
+    const browserLang = translate.getBrowserLang();
+    translate.use(browserLang.match(/en|pl/) ? browserLang : 'pl');
   }
 
   ngOnInit(): void {
@@ -68,6 +75,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public logOut() {
     this.store.dispatch(new authActions.LogOut());
+  }
+
+  public test() {
+    this.translate.use('en');
   }
 
   private logWithTheToken(): void {

@@ -1,1 +1,0 @@
-import { Routes } from '@angular/router';import { HomeComponent } from '../home/home.component';export const coreRoutes: Routes = [  { path: '', component: HomeComponent },];
