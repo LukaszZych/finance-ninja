@@ -8,7 +8,14 @@ import { TokenService } from './authentication/services/token.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, ResolveStart, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { faHome, faHistory, faPlusCircle, faChartPie, faUserCrown, faSignOut, faSignIn, faUserPlus } from '@fortawesome/pro-solid-svg-icons';
+import { faHome } from '@fortawesome/pro-solid-svg-icons/faHome';
+import { faHistory } from '@fortawesome/pro-solid-svg-icons/faHistory';
+import { faPlusCircle } from '@fortawesome/pro-solid-svg-icons/faPlusCircle';
+import { faSignIn } from '@fortawesome/pro-solid-svg-icons/faSignIn';
+import { faUserPlus } from '@fortawesome/pro-solid-svg-icons/faUserPlus';
+import { faSignOut } from '@fortawesome/pro-solid-svg-icons/faSignOut';
+import { faUserCrown } from '@fortawesome/pro-solid-svg-icons/faUserCrown';
+import { faChartPie } from '@fortawesome/pro-solid-svg-icons/faChartPie';
 
 @Component({
   selector: 'lz-root',
