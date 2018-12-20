@@ -1,0 +1,53 @@
+<div class="lz-container">
+  <div class="lz-row">
+    <div class="lz-col-12 center-container">
+
+      <lz-form-card>
+        <form [formGroup]="dataForm" #dataF="ngForm" (ngSubmit)="addData()">
+          <mat-form-field class="full-width">
+            <mat-icon matPrefix>flag</mat-icon>
+            <mat-select placeholder="Type" formControlName="dataType" required>
+              <mat-option value="expense">Expense</mat-option>
+              <mat-option value="income">Income</mat-option>
+            </mat-select>
+            <mat-hint>Please choose a data type</mat-hint>
+            <mat-error *ngIf="dataForm.get('dataType').invalid">Data type is not valid</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="full-width">
+            <mat-icon matPrefix>money</mat-icon>
+            <input matInput placeholder="Value" formControlName="value" type="number" min="0" required>
+            <mat-hint>Value must be greater than 0</mat-hint>
+            <mat-error *ngIf="dataForm.get('value').invalid">Value is not valid.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="full-width" *ngIf="dataForm.get('dataType').value === 'expense'">
+            <mat-icon matPrefix>poll</mat-icon>
+            <mat-select placeholder="Category" formControlName="category" required>
+              <mat-option *ngFor="let category of categories" [value]="category">
+                {{category}}
+              </mat-option>
+            </mat-select>
+            <mat-hint>Please choose a category</mat-hint>
+            <mat-error *ngIf="dataForm.get('category').invalid">Category can't be empty</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="full-width medium-bottom-margin">
+            <mat-icon matPrefix>create</mat-icon>
+            <input matInput placeholder="Description" formControlName="description" type="text" #description maxlength="50">
+            <mat-hint align="start">Max 50 characters</mat-hint>
+            <mat-hint align="end">{{description.value.length}} / 50</mat-hint>
+            <mat-error *ngIf="dataForm.get('description').invalid">Description is not valid.</mat-error>
+          </mat-form-field>
+
+          <div class="buttons">
+            <button mat-flat-button color="primary" [disabled]="!dataForm.valid" type="submit">Add</button>
+          </div>
+        </form>
+      </lz-form-card>
+
+      <button (click)="log()">log</button>
+      <button (click)="rawData()">rawData</button>
+    </div>
+  </div>
+</div>

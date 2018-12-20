@@ -16,6 +16,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { financesEffects } from './store/effects';
 import { financesReducer } from './store/reducers';
+import { AddDataComponent } from './containers/add-data/add-data.component';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { financesReducer } from './store/reducers';
   declarations: [
     AddExpenseComponent,
     AddIncomeComponent,
-    HistoryComponent
+    HistoryComponent,
+    AddDataComponent
   ],
   providers: [
     ExpenseService,
