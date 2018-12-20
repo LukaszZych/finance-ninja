@@ -8,6 +8,7 @@ import { TokenService } from './authentication/services/token.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, ResolveStart, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { faHome, faHistory, faPlusCircle, faChartPie, faUserCrown, faSignOut, faSignIn, faUserPlus } from '@fortawesome/pro-solid-svg-icons';
 
 @Component({
   selector: 'lz-root',
@@ -19,6 +20,17 @@ export class AppComponent implements OnInit, OnDestroy {
   public isAuthenticated = false;
   public isAdmin = false;
   public header: string;
+
+  public icons = {
+    home: faHome,
+    history: faHistory,
+    add: faPlusCircle,
+    stats: faChartPie,
+    admin: faUserCrown,
+    signOut: faSignOut,
+    signIn: faSignIn,
+    register: faUserPlus,
+  };
 
   private subscription: Subscription = new Subscription();
 

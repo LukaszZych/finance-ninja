@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AddExpenseComponent } from './containers/add-expense/add-expense.component';
-import { AddIncomeComponent } from './containers/add-income/add-income.component';
 import { RouterModule } from '@angular/router';
 import { financeRoutes } from './routes/finance.routes';
 import { HistoryComponent } from './containers/history/history.component';
@@ -28,8 +26,6 @@ import { AddDataComponent } from './containers/add-data/add-data.component';
     EffectsModule.forFeature(financesEffects),
   ],
   declarations: [
-    AddExpenseComponent,
-    AddIncomeComponent,
     HistoryComponent,
     AddDataComponent
   ],

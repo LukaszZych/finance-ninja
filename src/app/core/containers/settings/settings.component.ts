@@ -1,32 +1,40 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'lz-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss']
 })
-export class SettingsComponent implements OnInit {
+export class SettingsComponent implements OnInit, OnDestroy {
 
   public settingsForm: FormGroup;
+
+  private subscription = new Subscription();
 
   constructor(public translate: TranslateService,
               private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
-    this.settingsForm = this.initializeForm();
+    this.settingsForm = this.initializeForm(this.translate.currentLang);
 
-    this.settingsForm.valueChanges.subscribe((value) => {
-      console.log(value.language);
-      this.translate.use(value.language);
-    });
+    this.subscription.add(
+      this.settingsForm.valueChanges.subscribe((value) => {
+        this.translate.use(value.language);
+      })
+    );
   }
 
-  private initializeForm(): FormGroup {
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  private initializeForm(language: string): FormGroup {
     return this.formBuilder.group({
-      language: [null, [Validators.required]]
+      language: [language, [Validators.required]]
     });
   }
 }

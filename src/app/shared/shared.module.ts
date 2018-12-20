@@ -15,6 +15,7 @@ import {
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   imports: [
@@ -46,7 +47,8 @@ import { TranslateModule } from '@ngx-translate/core';
     MatSnackBarModule,
     MatMenuModule,
     MatProgressSpinnerModule,
-    TranslateModule
+    TranslateModule,
+    FontAwesomeModule
   ],
 })
 export class SharedModule {
