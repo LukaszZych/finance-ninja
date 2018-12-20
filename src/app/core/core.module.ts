@@ -5,11 +5,13 @@ import { RouterModule } from '@angular/router';
 import { coreRoutes } from './routes/core.routes';
 import { SettingsComponent } from './containers/settings/settings.component';
 import { SharedModule } from '../shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     SharedModule,
     CommonModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(coreRoutes),
   ],
   declarations: [HomeComponent, SettingsComponent],

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'lz-settings',
@@ -8,15 +9,19 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class SettingsComponent implements OnInit {
 
-  public languages: string[] = [
-    'polish', 'english'
-  ];
-
   public settingsForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(public translate: TranslateService,
+              private formBuilder: FormBuilder) {
+  }
 
   ngOnInit() {
+    this.settingsForm = this.initializeForm();
+
+    this.settingsForm.valueChanges.subscribe((value) => {
+      console.log(value.language);
+      this.translate.use(value.language);
+    });
   }
 
   private initializeForm(): FormGroup {
@@ -24,5 +29,4 @@ export class SettingsComponent implements OnInit {
       language: [null, [Validators.required]]
     });
   }
-
 }

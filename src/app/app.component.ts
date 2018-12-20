@@ -60,8 +60,8 @@ export class AppComponent implements OnInit, OnDestroy {
           map((event) => event.state.root.firstChild.data)
         )
         .subscribe((routeData) => {
-          if (routeData.name) {
-            this.header = routeData.name;
+          if (routeData.translation_key) {
+            this.header = routeData.translation_key;
           } else {
             this.header = '';
           }
@@ -75,10 +75,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public logOut() {
     this.store.dispatch(new authActions.LogOut());
-  }
-
-  public test() {
-    this.translate.use('en');
   }
 
   private logWithTheToken(): void {

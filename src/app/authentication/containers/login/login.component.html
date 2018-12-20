@@ -3,26 +3,26 @@
     <div class="lz-col-12 center-container">
 
       <lz-form-card *ngIf="!(isLoading | async)">
-        <h2>Welcome back!</h2>
-        <p>Log in to get going</p>
+        <h2>{{ 'LOGIN.WELCOME' | translate }}</h2>
+        <p>{{ 'LOGIN.WELCOME_DESCRIPTION' | translate }}</p>
         <form [formGroup]="logInForm" (ngSubmit)="logIn()">
           <mat-form-field class="full-width">
             <mat-icon matPrefix>email</mat-icon>
-            <input matInput placeholder="Email" formControlName="email" required>
-            <mat-hint>Required</mat-hint>
-            <mat-error *ngIf="logInForm.get('email').invalid">Email is not valid.</mat-error>
+            <input matInput placeholder="{{ 'COMMON.EMAIL' | translate }}" formControlName="email" required>
+            <mat-hint>{{ 'COMMON.REQUIRED' | translate }}</mat-hint>
+            <mat-error *ngIf="logInForm.get('email').invalid">{{ 'LOGIN.EMAIL_INVALID' | translate }}</mat-error>
           </mat-form-field>
 
           <mat-form-field class="full-width medium-bottom-margin">
             <mat-icon matPrefix>lock</mat-icon>
-            <input matInput placeholder="Password" formControlName="password" type="password" required>
-            <mat-hint>Required</mat-hint>
-            <mat-error *ngIf="logInForm.get('password').invalid">Password is not valid.</mat-error>
+            <input matInput placeholder="{{ 'COMMON.PASSWORD' | translate }}" formControlName="password" type="password" required>
+            <mat-hint>{{ 'COMMON.REQUIRED' | translate }}</mat-hint>
+            <mat-error *ngIf="logInForm.get('password').invalid">{{ 'LOGIN.PASSWORD_INVALID' | translate }}</mat-error>
           </mat-form-field>
 
           <div class="buttons">
-            <button mat-stroked-button color="primary" type="button" (click)="goToSignUp()">Sign Up</button>
-            <button mat-flat-button color="primary" [disabled]="!logInForm.valid" type="submit">Login</button>
+            <button mat-stroked-button color="primary" type="button" (click)="goToSignUp()">{{ 'COMMON.SIGN_UP' | translate }}</button>
+            <button mat-flat-button color="primary" [disabled]="!logInForm.valid" type="submit">{{ 'COMMON.LOGIN' | translate }}</button>
           </div>
         </form>
       </lz-form-card>

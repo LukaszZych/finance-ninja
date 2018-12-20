@@ -23,7 +23,7 @@ import { TokenService } from './services/token.service';
     HttpClientModule,
     ReactiveFormsModule,
     SharedModule,
-    StoreModule.forFeature('authenticationFeature', authenticationReducer), // dołącza ten klocek stanu do roota w app.module
+    StoreModule.forFeature('authenticationFeature', authenticationReducer),
     EffectsModule.forFeature([AuthEffects])
   ],
   declarations: [LoginComponent, SignUpComponent ],

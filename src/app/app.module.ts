@@ -29,8 +29,9 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
   : [];
 
 // AoT requires an exported function for factories
+// Place where are all translations
 export function HttpLoaderFactory(httpClient: HttpClient) {
-  return new TranslateHttpLoader(httpClient);
+  return new TranslateHttpLoader(httpClient, './assets/i18n/', '.json');
 }
 
 @NgModule({
