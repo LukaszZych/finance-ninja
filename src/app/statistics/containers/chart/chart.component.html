@@ -2,7 +2,7 @@
   <div class="lz-row">
     <div class="lz-col-12">
       <ng-container *ngIf="chartData.length; else noData">
-        <h3>The sum of expenses:</h3>
+        <p>{{ 'STATISTICS.CATEGORIES_CHART_DESCRIPTION' | translate }}:</p>
           <canvas baseChart
                   [data]="chartData"
                   [labels]="chartLabels"
@@ -11,7 +11,7 @@
                   [options]="chartOptions">
           </canvas>
       </ng-container>
-      <ng-template #noData><p class="center-text">No data to display.</p></ng-template>
+      <ng-template #noData><p class="center-text">{{ 'STATISTICS.NO_DATA' | translate }}</p></ng-template>
     </div>
   </div>
 </div>

@@ -28,7 +28,7 @@
       </mat-card>
 
       <div class="center-container" *ngIf="!combinedFinances.length && !isLoading">
-        <p class="center-text">History is empty, please add a new income/expense.</p>
+        <p class="center-text">{{ 'HISTORY.NO_DATA' | translate }}</p>
       </div>
 
     </div>

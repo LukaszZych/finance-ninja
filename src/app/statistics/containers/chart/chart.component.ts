@@ -7,6 +7,7 @@ import { authenticationSelectors } from '../../../authentication/store/selectors
 import { LoadUser } from '../../../finances/store/actions';
 import { financesSelectors } from '../../../finances/store/selectors/finances.selectors';
 import { Expense } from '../../../finances/models/expense.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'lz-chart',
@@ -15,7 +16,15 @@ import { Expense } from '../../../finances/models/expense.model';
 })
 export class ChartComponent implements OnInit, OnDestroy {
 
-  public chartLabels: string[] = ['food', 'home', 'car', 'entertainment', 'clothes', 'firm', 'education'];
+  public chartLabels: string[] = [
+    this.translate.instant('COMMON.CATEGORIES.FOOD'),
+    this.translate.instant('COMMON.CATEGORIES.HOME'),
+    this.translate.instant('COMMON.CATEGORIES.CAR'),
+    this.translate.instant('COMMON.CATEGORIES.ENTERTAINMENT'),
+    this.translate.instant('COMMON.CATEGORIES.CLOTHES'),
+    this.translate.instant('COMMON.CATEGORIES.FIRM'),
+    this.translate.instant('COMMON.CATEGORIES.EDUCATION')
+  ];
   public chartData: any[] = [];
   public chartType = 'pie';
   public isLoading: boolean;
@@ -25,12 +34,12 @@ export class ChartComponent implements OnInit, OnDestroy {
     }
   ];
   public chartOptions: object = {
-    legend: {position: 'bottom'}
+    legend: { position: 'bottom' }
   };
 
   private subscription = new Subscription();
 
-  constructor(private store: Store<FinancesState>) {
+  constructor(private store: Store<FinancesState>, private translate: TranslateService) {
   }
 
   ngOnInit(): void {
@@ -54,19 +63,19 @@ export class ChartComponent implements OnInit, OnDestroy {
     );
 
     this.subscription.add(
-    this.store
-      .pipe(
-        select(financesSelectors.userExpenses),
-        filter((expenses) => !!expenses.length),
-        map((expenses: Array<Expense>) => {
-          return expenses.reduce((previousValue, currentValue) => {
-            return {...previousValue, [currentValue.category]: previousValue[currentValue.category] + currentValue.value};
-          }, { 'food': 0, 'home': 0, 'car': 0, 'entertainment': 0, 'clothes': 0, 'firm': 0, 'education': 0 });
+      this.store
+        .pipe(
+          select(financesSelectors.userExpenses),
+          filter((expenses) => !!expenses.length),
+          map((expenses: Array<Expense>) => {
+            return expenses.reduce((previousValue, currentValue) => {
+              return { ...previousValue, [currentValue.category]: previousValue[currentValue.category] + currentValue.value };
+            }, { 'food': 0, 'home': 0, 'car': 0, 'entertainment': 0, 'clothes': 0, 'firm': 0, 'education': 0 });
+          })
+        )
+        .subscribe((expenses) => {
+          this.chartData = Object.values(expenses);
         })
-      )
-      .subscribe((expenses) => {
-        this.chartData = Object.values(expenses);
-      })
     );
   }
 

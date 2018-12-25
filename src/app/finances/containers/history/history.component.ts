@@ -92,6 +92,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
           }),
         )
         .subscribe((v) => {
+          console.log('data: ',  v);
           this.combinedFinances = v;
         })
     );

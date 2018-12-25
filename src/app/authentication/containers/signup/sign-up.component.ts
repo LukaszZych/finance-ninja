@@ -33,6 +33,6 @@ export class SignUpComponent implements OnInit {
   }
 
   public registerUser() {
-    this.store.dispatch(new authActions.SignIn(this.registerForm.getRawValue()));
+    this.store.dispatch(new authActions.SignUp(this.registerForm.getRawValue()));
   }
 }
