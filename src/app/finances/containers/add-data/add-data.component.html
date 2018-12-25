@@ -6,48 +6,47 @@
         <form [formGroup]="dataForm" #dataF="ngForm" (ngSubmit)="addData()">
           <mat-form-field class="full-width">
             <mat-icon matPrefix>flag</mat-icon>
-            <mat-select placeholder="Type" formControlName="dataType" required>
-              <mat-option value="expense">Expense</mat-option>
-              <mat-option value="income">Income</mat-option>
+            <mat-select placeholder="{{ 'COMMON.TYPE' | translate }}" formControlName="dataType" required>
+              <mat-option value="expense">{{ 'COMMON.EXPENSE' | translate }}</mat-option>
+              <mat-option value="income">{{ 'COMMON.INCOME' | translate }}</mat-option>
             </mat-select>
-            <mat-hint>Please choose a data type</mat-hint>
-            <mat-error *ngIf="dataForm.get('dataType').invalid">Data type is not valid</mat-error>
+            <mat-hint>{{ 'ADD_DATA.DATA_TYPE_HINT' | translate }}</mat-hint>
+            <mat-error *ngIf="dataForm.get('dataType').invalid">{{ 'ADD_DATA.DATA_TYPE_ERROR' | translate }}</mat-error>
           </mat-form-field>
 
           <mat-form-field class="full-width">
             <mat-icon matPrefix>money</mat-icon>
-            <input matInput placeholder="Value" formControlName="value" type="number" min="0" required>
-            <mat-hint>Value must be greater than 0</mat-hint>
-            <mat-error *ngIf="dataForm.get('value').invalid">Value is not valid.</mat-error>
+            <input matInput placeholder="{{ 'COMMON.VALUE' | translate }}" formControlName="value" type="number" min="0"
+                   required>
+            <mat-hint>{{ 'ADD_DATA.VALUE_HINT' | translate }}</mat-hint>
+            <mat-error *ngIf="dataForm.get('value').invalid">{{ 'ADD_DATA.VALUE_ERROR' | translate }}</mat-error>
           </mat-form-field>
 
           <mat-form-field class="full-width" *ngIf="dataForm.get('dataType').value === 'expense'">
             <mat-icon matPrefix>poll</mat-icon>
-            <mat-select placeholder="Category" formControlName="category" required>
-              <mat-option *ngFor="let category of categories" [value]="category">
-                {{category}}
+            <mat-select placeholder="{{ 'COMMON.CATEGORY' | translate }}" formControlName="category" required>
+              <mat-option *ngFor="let category of categories" [value]="category.value">
+                {{ category.viewKey | translate }}
               </mat-option>
             </mat-select>
-            <mat-hint>Please choose a category</mat-hint>
-            <mat-error *ngIf="dataForm.get('category').invalid">Category can't be empty</mat-error>
+            <mat-hint>{{ 'ADD_DATA.CATEGORY_HINT' | translate }}</mat-hint>
+            <mat-error *ngIf="dataForm.get('category').invalid">{{ 'ADD_DATA.CATEGORY_ERROR' | translate }}</mat-error>
           </mat-form-field>
 
           <mat-form-field class="full-width medium-bottom-margin">
             <mat-icon matPrefix>create</mat-icon>
-            <input matInput placeholder="Description" formControlName="description" type="text" #description maxlength="50">
-            <mat-hint align="start">Max 50 characters</mat-hint>
+            <input matInput placeholder="{{ 'COMMON.DESCRIPTION' | translate }}" formControlName="description"
+                   type="text" #description maxlength="50">
+            <mat-hint align="start">{{ 'ADD_DATA.DESCRIPTION_HINT' | translate }}</mat-hint>
             <mat-hint align="end">{{description.value.length}} / 50</mat-hint>
-            <mat-error *ngIf="dataForm.get('description').invalid">Description is not valid.</mat-error>
+            <mat-error *ngIf="dataForm.get('description').invalid">{{ 'ADD_DATA.DESCRIPTION_ERROR' | translate }}</mat-error>
           </mat-form-field>
 
           <div class="buttons">
-            <button mat-flat-button color="primary" [disabled]="!dataForm.valid" type="submit">Add</button>
+            <button mat-flat-button color="primary" [disabled]="!dataForm.valid" type="submit">{{ 'COMMON.ADD' | translate }}</button>
           </div>
         </form>
       </lz-form-card>
-
-      <button (click)="log()">log</button>
-      <button (click)="rawData()">rawData</button>
     </div>
   </div>
 </div>

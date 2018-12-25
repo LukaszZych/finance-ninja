@@ -1,6 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Category} from '../../models/category.model';
 import {select, Store} from '@ngrx/store';
 import {FinancesState} from '../../store/reducers';
 import {combineLatest, of} from 'rxjs';
@@ -17,8 +16,14 @@ export class AddDataComponent implements OnInit {
 
   @ViewChild('dataF') dataFormView;
   public dataForm: FormGroup;
-  public categories: Category[] = [
-    'food', 'home', 'car', 'entertainment', 'clothes', 'firm', 'education'
+  public categories: Array<{value: string, viewKey: string}> = [
+    {value: 'food', viewKey: 'COMMON.CATEGORIES.FOOD'},
+    {value: 'home', viewKey: 'COMMON.CATEGORIES.HOME'},
+    {value: 'car', viewKey: 'COMMON.CATEGORIES.CAR'},
+    {value: 'entertainment', viewKey: 'COMMON.CATEGORIES.ENTERTAINMENT'},
+    {value: 'clothes', viewKey: 'COMMON.CATEGORIES.CLOTHES'},
+    {value: 'firm', viewKey: 'COMMON.CATEGORIES.FIRM'},
+    {value: 'education', viewKey: 'COMMON.CATEGORIES.EDUCATION'}
   ];
 
   constructor(private formBuilder: FormBuilder,
@@ -33,7 +38,7 @@ export class AddDataComponent implements OnInit {
         if (v === 'income') {
           this.dataForm.removeControl('category');
         } else if (v === 'expense') {
-          this.dataForm.addControl('category', new FormControl(null, [Validators.required]))
+          this.dataForm.addControl('category', new FormControl(null, [Validators.required]));
         }
       });
   }
@@ -46,8 +51,7 @@ export class AddDataComponent implements OnInit {
         map((value: Object) => {
           delete value['dataType'];
           return value;
-        }),
-        tap((v) => console.log(v))
+        })
       );
     const token = this.store.pipe(select(authenticationSelectors.token));
 
@@ -73,13 +77,5 @@ export class AddDataComponent implements OnInit {
       category: [null, [Validators.required]],
       description: [null, [Validators.maxLength(50)]]
     });
-  }
-
-  log() {
-    console.log(this.dataForm);
-  }
-
-  rawData() {
-    console.log(this.dataForm.getRawValue());
   }
 }

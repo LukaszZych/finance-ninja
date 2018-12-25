@@ -9,7 +9,7 @@
       <mat-card class="day" *ngFor="let day of combinedFinances">
         <mat-card-header>
           <mat-icon class="main-icon" mat-card-avatar>event_note</mat-icon>
-          <mat-card-title>{{day.date}}</mat-card-title>
+          <mat-card-title>{{day.date | date: 'd/M/yyy'}}</mat-card-title>
           <mat-card-subtitle>{{day.dayResult}} zł</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content >
