@@ -57,7 +57,6 @@ export class AddDataComponent implements OnInit {
 
     combineLatest(formData, token)
       .pipe(first())
-      // .subscribe(([newData, currentToken]: [Expense, string]) => {
       .subscribe(([newData, currentToken]: [any, string]) => {
         if (dataType === 'expense') {
           this.store.dispatch(new AddExpense(newData, currentToken));
